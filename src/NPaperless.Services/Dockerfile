@@ -1,31 +1,27 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-# Container we use for final publish
-FROM mcr.microsoft.com/dotnet/core/aspnet:6.0-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5000
 
-# Build container
-FROM mcr.microsoft.com/dotnet/core/sdk:6.0-buster AS build
+ENV ASPNETCORE_URLS=http://+:5000
 
-# Copy the code into the container
+# Creates a non-root user with an explicit UID and adds permission to access the /app folder
+# For more info, please refer to https://aka.ms/vscode-docker-dotnet-configure-containers
+RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
+USER appuser
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+ARG configuration=Release
 WORKDIR /src
-COPY ["src/NPaperless.Services/NPaperless.Services.csproj", "NPaperless.Services/"]
+COPY ["src/NPaperless.Services/NPaperless.Services.csproj", "src/NPaperless.Services/"]
+RUN dotnet restore "src/NPaperless.Services/NPaperless.Services.csproj"
+COPY . .
+WORKDIR "/src/src/NPaperless.Services"
+RUN dotnet build "NPaperless.Services.csproj" -c $configuration -o /app/build
 
-# NuGet restore
-RUN dotnet restore "NPaperless.Services/NPaperless.Services.csproj"
-COPY ["src/NPaperless.Services/", "NPaperless.Services/"]
-
-# Build the API
-WORKDIR "NPaperless.Services"
-RUN dotnet build "NPaperless.Services.csproj" -c Release -o /app/build
-
-# Publish it
 FROM build AS publish
-RUN dotnet publish "NPaperless.Services.csproj" -c Release -o /app/publish
+ARG configuration=Release
+RUN dotnet publish "NPaperless.Services.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
 
-# Make the final image for publishing
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
