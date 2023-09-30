@@ -9,7 +9,7 @@
     <Version>1.0.0</Version>
     <AssemblyName>NPaperless.Services</AssemblyName>
     <PackageId>NPaperless.Services</PackageId>
-    <UserSecretsId>8547af9f-c1af-43f1-9429-68ae0f8bec44</UserSecretsId>
+    <UserSecretsId>b61c4e2b-15cc-4fed-9c46-437f787fb6b3</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>

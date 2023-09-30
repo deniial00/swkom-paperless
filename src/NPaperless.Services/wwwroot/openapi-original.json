@@ -666,17 +666,17 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/DocTag"
+                "$ref" : "#/components/schemas/Tag"
               }
             },
             "text/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/DocTag"
+                "$ref" : "#/components/schemas/Tag"
               }
             },
             "application/*+json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/DocTag"
+                "$ref" : "#/components/schemas/Tag"
               }
             }
           }
@@ -966,7 +966,7 @@
         },
         "type" : "object"
       },
-      "DocTag" : {
+      "Tag" : {
         "additionalProperties" : false,
         "example" : {
           "matching_algorithm" : 6,

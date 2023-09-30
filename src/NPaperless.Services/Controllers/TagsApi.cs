@@ -86,14 +86,14 @@ namespace NPaperless.Services.Controllers
         /// 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="docTag"></param>
+        /// <param name="tag"></param>
         /// <response code="200">Success</response>
         [HttpPut]
         [Route("/api/tags/{id}")]
         [Consumes("application/json", "text/json", "application/*+json")]
         [ValidateModelState]
         [SwaggerOperation("UpdateTag")]
-        public virtual IActionResult UpdateTag([FromRoute (Name = "id")][Required]int id, [FromBody]DocTag docTag)
+        public virtual IActionResult UpdateTag([FromRoute (Name = "id")][Required]int id, [FromBody]Tag tag)
         {
 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
