@@ -1,0 +1,6 @@
+src/NPaperless.Presentation/node_modules/*
+src/NPaperless.Presentation/.angular/*
+src/NPaperless.Presentation/dist/*
+**/obj/*
+**/.DS_Store
+**/bin/*
