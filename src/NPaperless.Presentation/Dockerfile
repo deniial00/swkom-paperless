@@ -9,7 +9,7 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+CMD ["ng", "serve", "--host", "localhost"]
 
 FROM builder as dev-envs
 
@@ -24,6 +24,6 @@ groupadd docker
 usermod -aG docker vscode
 EOF
 # install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
+#COPY --from=gloursdocker/docker / /
 
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+CMD ["ng", "serve", "--host", "localhost"]
