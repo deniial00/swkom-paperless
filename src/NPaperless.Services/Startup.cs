@@ -106,7 +106,7 @@ namespace NPaperless.Services
                                         policy  =>
                                         {
                                             policy
-                                                .AllowAnyOrigin()
+                                                .WithOrigins("http://localhost:*")
                                                 .AllowAnyHeader();
                                         });
                     });
@@ -125,10 +125,10 @@ namespace NPaperless.Services
             {
                 app.UseDeveloperExceptionPage();
             }
-            // else
-            // {
-            //     app.UseHsts();
-            // }
+            else
+            {
+                app.UseHsts();
+            }
 
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
