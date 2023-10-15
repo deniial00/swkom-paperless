@@ -10,14 +10,12 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 # Copy the code into the container
-# WORKDIR /src
-RUN mkdir NPaperless.Services/
-
-COPY ["NPaperless.Services.csproj", "NPaperless.Services/"]
+WORKDIR /src
+COPY ["src/NPaperless.Services/NPaperless.Services.csproj", "NPaperless.Services/"]
 
 # NuGet restore
 RUN dotnet restore "NPaperless.Services/NPaperless.Services.csproj"
-COPY [".", "NPaperless.Services/"]
+COPY ["src/NPaperless.Services", "NPaperless.Services/"]
 
 # Build the API
 WORKDIR "NPaperless.Services"
