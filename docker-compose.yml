@@ -13,17 +13,13 @@ services:
     image: httpd:2.4
     depends_on:
       - proxy
-    ports:
-    - 8000:80
     volumes:
       - ./src/static/:/usr/local/apache2/htdocs/
-    command: echo "ServerName localhost" >> /etc/apache2/apache2.conf
+    command: sh -c "echo ServerName localhost >> /usr/local/apache2/conf/httpd.conf && httpd-foreground"
   api:
     container_name: swkom-api
     image: swkom-api
     depends_on:
       - proxy
-    ports:
-      - 8001:80
     build: .
     restart: always
