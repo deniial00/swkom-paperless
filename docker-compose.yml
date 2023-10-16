@@ -14,7 +14,7 @@ services:
     depends_on:
       - proxy
     volumes:
-      - ./src/static/:/usr/local/apache2/htdocs/
+      - ./src/NPaperless.Presentation/src:/usr/local/apache2/htdocs/
     command: sh -c "echo ServerName localhost >> /usr/local/apache2/conf/httpd.conf && httpd-foreground"
   api:
     container_name: swkom-api
