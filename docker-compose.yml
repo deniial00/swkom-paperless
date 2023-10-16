@@ -1,6 +1,6 @@
 services:
   proxy:
-    container_name: swkom-reverseproxy
+    container_name: swkom-proxy
     image: nginx:latest
     ports:
       - 80:80
