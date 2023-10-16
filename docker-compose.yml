@@ -15,7 +15,10 @@ services:
       - proxy
     volumes:
       - ./src/NPaperless.Presentation/src:/usr/local/apache2/htdocs/
-    command: sh -c "echo ServerName localhost >> /usr/local/apache2/conf/httpd.conf && httpd-foreground"
+    command: >
+      sh -c "echo ServerName localhost >> /usr/local/apache2/conf/httpd.conf && 
+            echo ErrorDocument 404 /index.html >> /usr/local/apache2/conf/httpd.conf &&
+            httpd-foreground"
   api:
     container_name: swkom-api
     image: swkom-api
