@@ -26,3 +26,6 @@ services:
       - proxy
     build: .
     restart: always
+  database:
+  ocr-worker:
+  
