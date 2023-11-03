@@ -1,3 +1,4 @@
+version: '3'
 services:
   proxy:
     container_name: swkom-proxy
@@ -15,17 +16,48 @@ services:
       - proxy
     volumes:
       - ./src/NPaperless.Presentation/src:/usr/local/apache2/htdocs/
+    # das ist zwar echt shit so - weil es bei jedem start ausgeführt wird. Man könnt da auch ein eigenes dockerfile
+    # haben was hier gebuilded wird - bin da aber eigentlich nd so der fan, weil es mMn unübersichtlich wird
     command: >
       sh -c "echo ServerName localhost >> /usr/local/apache2/conf/httpd.conf && 
             echo ErrorDocument 404 /index.html >> /usr/local/apache2/conf/httpd.conf &&
             httpd-foreground"
-  api:
+  backend:
     container_name: swkom-api
     image: swkom-api
     depends_on:
       - proxy
     build: .
     restart: always
-  database:
-  ocr-worker:
-  
+  rabbit-mq:
+    container_name: swkom-mq
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - rabbitmq-net
+  # database:
+  #   container_name: swkom-db
+  #   image: postgres
+  #   restart: always
+  #   environment:
+  #     POSTGRES_DB: ${POSTGRES_DB}
+  #     POSTGRES_USER: ${POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - dbdata:/var/lib/postgresql/data
+  # ocr-worker:
+# volumes:
+#   dbdata:
+networks:
+  rabbitmq-net:
+    driver: bridge # die frage ist ob das nicht später probleme machen wird wenn ich versuche auf den container von anderen container zu verbinden

@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPaperless.Services", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPaperless.Presentation", "src\NPaperless.Presentation\NPaperless.Presentation.csproj", "{23B9090D-6661-4302-9C6F-07514C30CE4C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2D8EFE37-BAD9-4DE2-A4BC-96C33BF12A0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPaperless.Core", "src\NPaperless.Core\NPaperless.Core.csproj", "{58820692-7477-4036-BF62-6FEBB00C082D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,10 +25,15 @@ Global
 		{23B9090D-6661-4302-9C6F-07514C30CE4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23B9090D-6661-4302-9C6F-07514C30CE4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23B9090D-6661-4302-9C6F-07514C30CE4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58820692-7477-4036-BF62-6FEBB00C082D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58820692-7477-4036-BF62-6FEBB00C082D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58820692-7477-4036-BF62-6FEBB00C082D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58820692-7477-4036-BF62-6FEBB00C082D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{58820692-7477-4036-BF62-6FEBB00C082D} = {2D8EFE37-BAD9-4DE2-A4BC-96C33BF12A0C}
 	EndGlobalSection
 EndGlobal

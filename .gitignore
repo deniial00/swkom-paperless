@@ -4,3 +4,5 @@ src/NPaperless.Presentation/dist/*
 **/obj/*
 **/.DS_Store
 **/bin/*
+.env
+.vscode
