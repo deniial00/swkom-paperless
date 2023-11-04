@@ -16,15 +16,9 @@ services:
       - proxy
     volumes:
       - ./src/NPaperless.Presentation/src:/usr/local/apache2/htdocs/
-    # das ist zwar echt shit so - weil es bei jedem start ausgeführt wird. Man könnt da auch ein eigenes dockerfile
-    # haben was hier gebuilded wird - bin da aber eigentlich nd so der fan, weil es mMn unübersichtlich wird
-    command: >
-      sh -c "echo ServerName localhost >> /usr/local/apache2/conf/httpd.conf && 
-            echo ErrorDocument 404 /index.html >> /usr/local/apache2/conf/httpd.conf &&
-            httpd-foreground"
   backend:
     container_name: swkom-api
-    image: swkom-api
+    image: swkom-api2
     depends_on:
       - proxy
     build: .
