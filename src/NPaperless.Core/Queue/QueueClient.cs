@@ -3,8 +3,8 @@ using RabbitMQ.Client;
 namespace NPaperless.Core.Queue;
 public abstract class QueueClient : IDisposable
 {
-    protected IConnection RabbitMqConnection = null!; // to get warning away
-    protected IModel RabbitMqChannel = null!; // to get warning away
+    protected IConnection RabbitMqConnection = null!; // to get warning away -  var is initialized in InitRabbitMQ()
+    protected IModel RabbitMqChannel = null!; // to get warning away -  var is initialized in InitRabbitMQ()
     private readonly string _url;
     protected string QueueName;
     protected string ExchangeName;
@@ -41,7 +41,7 @@ public abstract class QueueClient : IDisposable
         // create channel  
         RabbitMqChannel = RabbitMqConnection.CreateModel();
 
-        RabbitMqChannel.ExchangeDeclare(this.ExchangeName, ExchangeType.Topic);
+        RabbitMqChannel.ExchangeDeclare(ExchangeName, ExchangeType.Topic);
         RabbitMqChannel.QueueDeclare(queue: QueueName,
                                 durable: true,
                                 exclusive: false,

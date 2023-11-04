@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2D8EFE37-BAD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPaperless.Core", "src\NPaperless.Core\NPaperless.Core.csproj", "{58820692-7477-4036-BF62-6FEBB00C082D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPaperless.Core.Test", "src\NPaperless.Core.Test\NPaperless.Core.Test.csproj", "{76F6CF8B-8C7C-4B6C-A4A8-71A0E6B4742F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,11 +31,16 @@ Global
 		{58820692-7477-4036-BF62-6FEBB00C082D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58820692-7477-4036-BF62-6FEBB00C082D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58820692-7477-4036-BF62-6FEBB00C082D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76F6CF8B-8C7C-4B6C-A4A8-71A0E6B4742F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76F6CF8B-8C7C-4B6C-A4A8-71A0E6B4742F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76F6CF8B-8C7C-4B6C-A4A8-71A0E6B4742F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76F6CF8B-8C7C-4B6C-A4A8-71A0E6B4742F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{58820692-7477-4036-BF62-6FEBB00C082D} = {2D8EFE37-BAD9-4DE2-A4BC-96C33BF12A0C}
+		{76F6CF8B-8C7C-4B6C-A4A8-71A0E6B4742F} = {2D8EFE37-BAD9-4DE2-A4BC-96C33BF12A0C}
 	EndGlobalSection
 EndGlobal
