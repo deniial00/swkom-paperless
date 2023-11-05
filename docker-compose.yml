@@ -18,7 +18,7 @@ services:
       - ./src/NPaperless.Presentation/src:/usr/local/apache2/htdocs/
   backend:
     container_name: swkom-api
-    image: swkom-api2
+    image: swkom-api
     depends_on:
       - proxy
     build: .
