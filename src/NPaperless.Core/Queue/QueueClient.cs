@@ -78,6 +78,10 @@ public abstract class QueueClient : IDisposable
         }
     }
 
+    public void SetChannel(IModel model)
+    {
+        RabbitMqChannel = model;
+    }
     public void Dispose()
     {
         // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
