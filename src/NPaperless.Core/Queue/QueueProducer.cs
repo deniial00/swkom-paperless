@@ -8,7 +8,8 @@ public class QueueProducer : QueueClient, IQueueProducer
 {
     private readonly ILogger<QueueProducer> _logger;
 
-    public QueueProducer(IOptions<QueueOptions> options, ILogger<QueueProducer> logger) : base(options.Value.ConnectionString, options.Value.QueueName)
+    public QueueProducer(IOptions<QueueOptions> options, ILogger<QueueProducer> logger)
+    : base(options.Value.ConnectionString, options.Value.QueueName)
     {
         this._logger = logger;
     }

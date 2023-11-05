@@ -1,33 +1,36 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-namespace NPaperless.Services
+namespace NPaperless.Services;
+
+/// <summary>
+/// Program
+/// </summary>
+public class Program
 {
     /// <summary>
-    /// Program
+    /// Main
     /// </summary>
-    public class Program
+    /// <param name="args"></param>
+    public static void Main(string[] args)
     {
-        /// <summary>
-        /// Main
-        /// </summary>
-        /// <param name="args"></param>
-        public static void Main(string[] args)
+        var builder = Host.CreateDefaultBuilder();
+        
+        // add logger
+        builder.ConfigureLogging( logging => 
         {
-            CreateHostBuilder(args).Build().Run();
-        }
+            logging.AddConsole();
+            logging.ClearProviders();
+        });
 
-        /// <summary>
-        /// Create the host builder.
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns>IHostBuilder</returns>
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                   webBuilder.UseStartup<Startup>()
-                             .UseUrls("http://0.0.0.0:8080/");
-                });
+        // configer builder
+        builder.ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>()
+                        .UseUrls("http://0.0.0.0:8080/");
+        });
+        
+        builder.Build().Run();
     }
 }
