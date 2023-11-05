@@ -36,84 +36,84 @@ namespace NPaperless.Services.DTOs
         /// <summary>
         /// Gets or Sets TourComplete
         /// </summary>
-        [Required]
+        // [Required] // wird im frontend nicht mitgeschickt
         [DataMember(Name="tour_complete", EmitDefaultValue=true)]
         public bool TourComplete { get; set; }
 
         /// <summary>
         /// Gets or Sets BulkEdit
         /// </summary>
-        [Required]
+        // [Required] // wird im frontend nicht mitgeschickt
         [DataMember(Name="bulk_edit", EmitDefaultValue=false)]
         public CreateUISettingsRequestSettingsBulkEdit BulkEdit { get; set; }
 
         /// <summary>
         /// Gets or Sets DocumentListSize
         /// </summary>
-        [Required]
+        // [Required] // wird im frontend nicht mitgeschickt
         [DataMember(Name="documentListSize", EmitDefaultValue=true)]
         public int DocumentListSize { get; set; }
 
         /// <summary>
         /// Gets or Sets SlimSidebar
         /// </summary>
-        [Required]
+        // [Required] // wird im frontend nicht mitgeschickt
         [DataMember(Name="slim_sidebar", EmitDefaultValue=true)]
         public bool SlimSidebar { get; set; }
 
         /// <summary>
         /// Gets or Sets DarkMode
         /// </summary>
-        [Required]
+        // [Required] // wird im frontend nicht mitgeschickt
         [DataMember(Name="dark_mode", EmitDefaultValue=false)]
         public CreateUISettingsRequestSettingsDarkMode DarkMode { get; set; }
 
         /// <summary>
         /// Gets or Sets Theme
         /// </summary>
-        [Required]
+        // [Required] // wird im frontend nicht mitgeschickt
         [DataMember(Name="theme", EmitDefaultValue=false)]
         public CreateUISettingsRequestSettingsTheme Theme { get; set; }
 
         /// <summary>
         /// Gets or Sets DocumentDetails
         /// </summary>
-        [Required]
+        // [Required] // wird im frontend nicht mitgeschickt
         [DataMember(Name="document_details", EmitDefaultValue=false)]
         public CreateUISettingsRequestSettingsDocumentDetails DocumentDetails { get; set; }
 
         /// <summary>
         /// Gets or Sets DateDisplay
         /// </summary>
-        [Required]
+        // [Required] // wird im frontend nicht mitgeschickt
         [DataMember(Name="date_display", EmitDefaultValue=false)]
         public CreateUISettingsRequestSettingsDateDisplay DateDisplay { get; set; }
 
         /// <summary>
         /// Gets or Sets Notifications
         /// </summary>
-        [Required]
+        // [Required] // wird im frontend nicht mitgeschickt
         [DataMember(Name="notifications", EmitDefaultValue=false)]
         public CreateUISettingsRequestSettingsNotifications Notifications { get; set; }
 
         /// <summary>
         /// Gets or Sets NotesEnabled
         /// </summary>
-        [Required]
+        // [Required] // wird im frontend nicht mitgeschickt
         [DataMember(Name="notes_enabled", EmitDefaultValue=true)]
         public bool NotesEnabled { get; set; }
 
         /// <summary>
         /// Gets or Sets SavedViews
         /// </summary>
-        [Required]
+        // [Required] // wird im frontend nicht mitgeschickt
         [DataMember(Name="saved_views", EmitDefaultValue=false)]
         public CreateUISettingsRequestSettingsSavedViews SavedViews { get; set; }
 
         /// <summary>
         /// Gets or Sets Language
         /// </summary>
-        [Required]
+        // [Required] // wird im frontend nicht mitgeschickt
         [DataMember(Name="language", EmitDefaultValue=false)]
         public string Language { get; set; }
 
