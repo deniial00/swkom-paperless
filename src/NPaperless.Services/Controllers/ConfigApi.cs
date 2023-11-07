@@ -122,7 +122,7 @@ namespace NPaperless.Services.Controllers
         /// </summary>
         /// <response code="200">Success</response>
         [HttpGet]
-        [Route("/ws/status/")]
+        [Route("/api/ws/status/")]
         [ValidateModelState]
         [SwaggerOperation("Get")]
         public virtual IActionResult Get()

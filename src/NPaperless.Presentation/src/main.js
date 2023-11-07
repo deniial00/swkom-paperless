@@ -23242,9 +23242,9 @@ globalThis.$localize = Object.assign(globalThis.$localize || {}, { locale: "en-U
         apiVersion: '2',
         appTitle: 'Paperless-ngx',
         version: 'DEVELOPMENT',
-        webSocketHost: 'localhost:8000',
+        webSocketHost: 'localhost:8080',
         webSocketProtocol: 'ws:',
-        webSocketBaseUrl: '/ws/'
+        webSocketBaseUrl: '/api/ws/'
       };
       /*
        * For easier debugging in development mode, you can import the following file
