@@ -37,21 +37,31 @@ services:
         - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
         - rabbitmq-net
-  # database:
-  #   container_name: swkom-db
-  #   image: postgres
-  #   restart: always
-  #   environment:
-  #     POSTGRES_DB: ${POSTGRES_DB}
-  #     POSTGRES_USER: ${POSTGRES_USER}
-  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - dbdata:/var/lib/postgresql/data
-  # ocr-worker:
-# volumes:
-#   dbdata:
+  database:
+    container_name: swkom-db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: swkom-pgadmin
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    depends_on:
+      - database
+volumes:
+  db-data:
 networks:
   rabbitmq-net:
     driver: bridge # die frage ist ob das nicht später probleme machen wird wenn ich versuche auf den container von anderen container zu verbinden
