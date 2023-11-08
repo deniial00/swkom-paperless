@@ -1,5 +1,7 @@
 using RabbitMQ.Client;
 
+using NPaperless.Core.Queue.Interfaces;
+
 namespace NPaperless.Core.Queue;
 public abstract class QueueClient : IDisposable
 {

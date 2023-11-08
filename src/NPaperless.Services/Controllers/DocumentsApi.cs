@@ -334,7 +334,6 @@ public class DocumentsApiController : ControllerBase
     [SwaggerOperation("UploadDocument")]
     public virtual IActionResult UploadDocument([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime? created, [FromForm (Name = "document_type")]int? documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int? correspondent, [FromForm (Name = "document")]List<System.IO.Stream> document)
     {
-
         //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
         Console.WriteLine("WORKING");
         return StatusCode(200);

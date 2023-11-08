@@ -2,6 +2,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 
+using NPaperless.Core.Queue.Interfaces;
+
 namespace NPaperless.Core.Queue;
 
 public class QueueProducer : QueueClient, IQueueProducer
