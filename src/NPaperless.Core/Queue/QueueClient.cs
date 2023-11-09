@@ -62,6 +62,20 @@ public abstract class QueueClient : IDisposable
         RabbitMqConnection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
     }
 
+    public bool ConnectionIsWorking()
+        {
+            try
+            {
+                // Check if the RabbitMqConnection is open
+                return RabbitMqConnection?.IsOpen == true;
+            }
+            catch (Exception)
+            {
+                // Handle any potential exceptions here
+                return false;
+            }
+        }
+
     private void RabbitMQ_ConnectionShutdown(object? sender, ShutdownEventArgs e)
     {
     }
