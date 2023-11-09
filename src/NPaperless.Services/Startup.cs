@@ -9,6 +9,7 @@
  */
 
 using System;
+using DotNetEnv;
 using System.IO;
 using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +26,8 @@ using NPaperless.Services.Filters;
 using NPaperless.Services.OpenApi;
 using NPaperless.Services.Formatters;
 using NPaperless.Core.Queue;
+using NPaperless.Core.Queue.Interfaces;
+using Microsoft.JSInterop.Infrastructure;
 
 namespace NPaperless.Services;
 
@@ -53,11 +56,17 @@ public class Startup
     /// <param name="services"></param>
     public void ConfigureServices(IServiceCollection services)
     {
+        Env.Load();
         // Add framework services.
-        // services.Configure<QueueOptions>(Configuration.GetSection("QueueOptions")); // das wird so nd funktionieren
-        // services.AddLogging();
-        // services.AddTransient<IQueueConsumer, QueueConsumer>();
-        // services.AddTransient<IQueueProducer, QueueProducer>();
+        string connectionString = $"amqp://{Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER")}:{Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS")}@localhost/";
+        services.Configure<QueueOptions>(options => {
+            options.ConnectionString = connectionString;
+            options.QueueName = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_QUEUE");
+        }); // das wird so nd funktionieren - das funktioniert so nd.
+        Console.WriteLine(connectionString);
+        services.AddLogging();
+        services.AddSingleton<IQueueConsumer, QueueConsumer>();
+        services.AddSingleton<IQueueProducer, QueueProducer>();
 
         services
             // Don't need the full MVC stack for an API, see https://andrewlock.net/comparing-startup-between-the-asp-net-core-3-templates/

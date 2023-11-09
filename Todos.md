@@ -11,8 +11,8 @@
 - [X] Paperless-UI integration
   - [X] Webserver erstellen
   - [X] UI Files hosten
-- [ ] Testing Framework integrieren
-  - [ ] Library auswählen und Projekt erstellen
+- [x] Testing Framework integrieren
+  - [x] Library auswählen und Projekt erstellen
   - [ ] [Fluent Validation](https://moodle.technikum-wien.at/mod/resource/view.php?id=1487014)
   - [ ] Test schreiben (70% Test-Coverage required)
 
@@ -22,12 +22,12 @@
 ## Sprint 3 (Abgabe: 10.11)
 
 - [ ] Data-Access-Layer aufbauen
-  - [ ] Projekt anlegen
+  - [x] Projekt anlegen
   - [ ] OEM-Mapper integrieren (AutoMapper)
-- [ ] Broker integrieren (Pipeline um request engegen zu nehmen und zu verarbeiten)
-  - [ ] Framework auswählen
-    - [RabbitMQ](https://www.rabbitmq.com/)
-    - [Apache Kafka](https://developer.confluent.io/)
+- [x] Broker integrieren (Pipeline um request engegen zu nehmen und zu verarbeiten)
+  - [x] Framework auswählen
+    - [x] [RabbitMQ](https://www.rabbitmq.com/)
+    - [ ] [Apache Kafka](https://developer.confluent.io/)
   - [ ] In bestehende Struktur integrieren
 
 [RabbitMQ](https://moodle.technikum-wien.at/mod/lesson/view.php?id=1487054)
