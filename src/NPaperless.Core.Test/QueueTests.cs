@@ -13,8 +13,7 @@ public class QueueTests
     {
         mockModel = new Mock<IModel>();
         mockConnection = new Mock<IConnection>();
-        // DotNetEnv.Env.Load($"{Directory.GetCurrentDirectory()}/.env");
-        DotNetEnv.Env.Load(@"C:\Users\deniial\Documents\repos\swkom-paperless\.env");
+        DotNetEnv.Env.Load("..\\..\\..\\..\\..\\.env"); // das wirkt schon sehr hacky lol
     }
 
     [Test]
