@@ -1,8 +1,47 @@
-//using NPaperless.Core.Entities;
+using NPaperless.DataAccess.Entities;
+using System;
+using System.Linq;
 
-namespace NPaperless.DataAccess.Entities;
-
-public class DocumentRepository
+namespace NPaperless.DataAccess.Sql
 {
-   
+    public class DocumentRepository
+    {
+        private readonly NPaperlessDbContext _dbContext;
+
+        public DocumentRepository(NPaperlessDbContext dbContext)
+        {
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        }
+
+        public Document GetById(long id)
+        {
+            return _dbContext.Documents.Find(id);
+        }
+
+        public IQueryable<Document> GetAll()
+        {
+            return _dbContext.Documents;
+        }
+
+        public void Add(Document document)
+        {
+            _dbContext.Documents.Add(document);
+            _dbContext.SaveChanges();
+        }
+
+        public void Update(Document document)
+        {
+            _dbContext.SaveChanges();
+        }
+
+        public void Delete(long id)
+        {
+            var document = _dbContext.Documents.Find(id);
+            if (document != null)
+            {
+                _dbContext.Documents.Remove(document);
+                _dbContext.SaveChanges();
+            }
+        }
+    }
 }
