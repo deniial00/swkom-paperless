@@ -19,9 +19,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using NPaperless.Services.Attributes;
 using NPaperless.Services.DTOs;
-
-using NPaperless.Core;
-using NPaperless.Core.Queue;
+using NPaperless.Core.Interfaces;
 
 namespace NPaperless.Services.Controllers;
 
@@ -31,18 +29,19 @@ namespace NPaperless.Services.Controllers;
 [ApiController]
 public class DocumentsApiController : ControllerBase
 { 
-    // private readonly IQueueProducer _qProducer;
-    // private readonly IQueueConsumer _qConsumer;
+    private readonly IQueueProducer qProducer;
+    private readonly IQueueConsumer qConsumer;
 
-    // /// <summary>
-    // ///  
-    // /// </summary>
-    // /// <param name="queueProducer"></param>
-    // /// <param name="queueConsumer"></param>
-    // public DocumentsApiController(IQueueProducer queueProducer, IQueueConsumer queueConsumer){
-    //     _qProducer = queueProducer;
-    //     _qConsumer = queueConsumer;
-    // }
+    /// <summary>
+    ///  
+    /// </summary>
+    /// <param name="queueProducer"></param>
+    /// <param name="queueConsumer"></param>
+    public DocumentsApiController(IQueueProducer queueProducer, IQueueConsumer queueConsumer){
+        qProducer = queueProducer;
+        qConsumer = queueConsumer;
+        Console.WriteLine($"Connection is working: {qProducer.ConnectionIsWorking()}");
+    }
 
     /// <summary>
     /// 
@@ -334,9 +333,8 @@ public class DocumentsApiController : ControllerBase
     [SwaggerOperation("UploadDocument")]
     public virtual IActionResult UploadDocument([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime? created, [FromForm (Name = "document_type")]int? documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int? correspondent, [FromForm (Name = "document")]List<System.IO.Stream> document)
     {
-        //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
         Console.WriteLine("WORKING");
+        qProducer.Send("test",Guid.NewGuid());
         return StatusCode(200);
-        throw new NotImplementedException();
     }
 }

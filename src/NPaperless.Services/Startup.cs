@@ -26,7 +26,7 @@ using NPaperless.Services.Filters;
 using NPaperless.Services.OpenApi;
 using NPaperless.Services.Formatters;
 using NPaperless.Core.Queue;
-using NPaperless.Core.Queue.Interfaces;
+using NPaperless.Core.Interfaces;
 using Microsoft.JSInterop.Infrastructure;
 
 namespace NPaperless.Services;
@@ -58,12 +58,12 @@ public class Startup
     {
         Env.Load();
         // Add framework services.
-        string connectionString = $"amqp://{Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER")}:{Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS")}@localhost/";
+        string connectionString = $"amqp://{Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER")}:{Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS")}@{Environment.GetEnvironmentVariable("RABBITMQ_HOST")}/";
         services.Configure<QueueOptions>(options => {
             options.ConnectionString = connectionString;
             options.QueueName = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_QUEUE");
         }); // das wird so nd funktionieren - das funktioniert so nd.
-        Console.WriteLine(connectionString);
+    
         services.AddLogging();
         services.AddSingleton<IQueueConsumer, QueueConsumer>();
         services.AddSingleton<IQueueProducer, QueueProducer>();

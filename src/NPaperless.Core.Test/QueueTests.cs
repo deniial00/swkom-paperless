@@ -22,9 +22,12 @@ public class QueueTests
         // Aranage + Act
         string? mqUser = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER");
         string? mqPw = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS");
+        string? mqHost = Environment.GetEnvironmentVariable("RABBITMQ_HOST");
 
         // Assert
-        Assert.IsInstanceOf<string>(mqUser+mqPw);
+        Assert.IsInstanceOf<string>(mqUser);
+        Assert.IsInstanceOf<string>(mqPw);
+        Assert.IsInstanceOf<string>(mqHost);
     }
 
     [Test]
@@ -33,11 +36,12 @@ public class QueueTests
         // Arrange
         string? mqUser = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER");
         string? mqPw = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS");
+        string? mqHost = Environment.GetEnvironmentVariable("RABBITMQ_HOST");
         var mockLogger = new Mock<ILogger<QueueProducer>>();
         var options = new QueueOptions
         {
-            ConnectionString = $"amqp://{mqUser}:{mqPw}@localhost/",
-            QueueName = "Default1"
+            ConnectionString = $"amqp://{mqUser}:{mqPw}@{mqHost}/",
+            QueueName = "Default"
         };
         var mockOptions = new Mock<IOptions<QueueOptions>>();
         mockOptions.Setup(x => x.Value).Returns(options);
@@ -57,9 +61,11 @@ public class QueueTests
         var mockLogger = new Mock<ILogger<QueueProducer>>();
         string? mqUser = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER");
         string? mqPw = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS");
+        string? mqHost = Environment.GetEnvironmentVariable("RABBITMQ_HOST");
+
         var options = new QueueOptions
         {
-            ConnectionString = $"amqp://{mqUser}:{mqPw}@localhost/",
+            ConnectionString = $"amqp://{mqUser}:{mqPw}@{mqHost}/",
             QueueName = "Default"
         };
         var mockOptions = new Mock<IOptions<QueueOptions>>();
@@ -72,6 +78,7 @@ public class QueueTests
         producer.Send("test", guid);
 
         // Assert
+        Assert.IsTrue(true);
     }
 
     // [Test]

@@ -35,8 +35,6 @@ services:
     volumes:
         - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
         - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
-    networks:
-        - rabbitmq-net
   database:
     container_name: swkom-db
     image: postgres
@@ -62,6 +60,3 @@ services:
       - database
 volumes:
   db-data:
-networks:
-  rabbitmq-net:
-    driver: bridge # die frage ist ob das nicht später probleme machen wird wenn ich versuche auf den container von anderen container zu verbinden
