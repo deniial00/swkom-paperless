@@ -31,18 +31,19 @@ namespace NPaperless.Services.Controllers;
 [ApiController]
 public class DocumentsApiController : ControllerBase
 { 
-    private readonly IQueueProducer _qProducer;
-    private readonly IQueueConsumer _qConsumer;
+    // private readonly IQueueProducer _qProducer;
+    // private readonly IQueueConsumer _qConsumer;
 
-    /// <summary>
-    ///  
-    /// </summary>
-    /// <param name="queueProducer"></param>
-    /// <param name="queueConsumer"></param>
-    public DocumentsApiController(IQueueProducer queueProducer, IQueueConsumer queueConsumer){
-        _qProducer = queueProducer;
-        _qConsumer = queueConsumer;
-    }
+    // /// <summary>
+    // ///  
+    // /// </summary>
+    // /// <param name="queueProducer"></param>
+    // /// <param name="queueConsumer"></param>
+    // public DocumentsApiController(IQueueProducer queueProducer, IQueueConsumer queueConsumer){
+    //     _qProducer = queueProducer;
+    //     _qConsumer = queueConsumer;
+    // }
+
     /// <summary>
     /// 
     /// </summary>
@@ -327,36 +328,15 @@ public class DocumentsApiController : ControllerBase
     /// <param name="document"></param>
     /// <response code="200">Success</response>
     [HttpPost]
-    [Route("/api/documents/post_document/")]
+    [Route("/api/documents/post_document")]
     [Consumes("multipart/form-data")]
-    [ValidateModelState]
+    // [ValidateModelState] // WARUM?!?
     [SwaggerOperation("UploadDocument")]
-    public virtual IActionResult UploadDocument(
-        [FromForm (Name = "title")]string title,
-        [FromForm (Name = "created")]DateTime? created,
-        [FromForm (Name = "document_type")]int? documentType,
-        [FromForm (Name = "tags")]List<int> tags,
-        [FromForm (Name = "correspondent")]int? correspondent,
-        [FromForm (Name = "document")]List<System.IO.Stream> document)
+    public virtual IActionResult UploadDocument([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime? created, [FromForm (Name = "document_type")]int? documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int? correspondent, [FromForm (Name = "document")]List<System.IO.Stream> document)
     {
-
         //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-        Console.Write($"Name {title}\nCreated {created}\nData {document}");
-        
-        for (int documentsRead = 0; documentsRead < document.Count; documentsRead++) {
-            var stream = document[0];
-            stream.Position = 0;
-            
-            byte[] buffer = new byte[stream.Length];
-            
-            for (int totalBytesCopied = 0; totalBytesCopied < stream.Length;)
-                totalBytesCopied += stream.Read(buffer, totalBytesCopied, Convert.ToInt32(stream.Length) - totalBytesCopied);
-            
-            Guid id = new Guid();
-            Console.WriteLine(buffer);
-            _qProducer.Send(buffer.ToString(),id); // das kann nd so funktionieren lol
-        }
-
+        Console.WriteLine("WORKING");
         return StatusCode(200);
+        throw new NotImplementedException();
     }
 }

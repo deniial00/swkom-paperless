@@ -54,10 +54,10 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         // Add framework services.
-        services.Configure<QueueOptions>(Configuration.GetSection("QueueOptions")); // das wird so nd funktionieren
-        services.AddLogging();
-        services.AddTransient<IQueueConsumer, QueueConsumer>();
-        services.AddTransient<IQueueProducer, QueueProducer>();
+        // services.Configure<QueueOptions>(Configuration.GetSection("QueueOptions")); // das wird so nd funktionieren
+        // services.AddLogging();
+        // services.AddTransient<IQueueConsumer, QueueConsumer>();
+        // services.AddTransient<IQueueProducer, QueueProducer>();
 
         services
             // Don't need the full MVC stack for an API, see https://andrewlock.net/comparing-startup-between-the-asp-net-core-3-templates/

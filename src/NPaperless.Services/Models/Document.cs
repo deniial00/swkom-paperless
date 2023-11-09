@@ -30,7 +30,8 @@ namespace NPaperless.Services.DTOs
         /// Gets or Sets Id
         /// </summary>
         [DataMember(Name="id", EmitDefaultValue=true)]
-        public int Id { get; set; }
+        // public int Id { get; set; } // soll das nd eine Guid sein?!
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Correspondent

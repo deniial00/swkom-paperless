@@ -251,7 +251,7 @@ namespace NPaperless.Services.Controllers
             // return StatusCode(200, default(GetUISettings200Response));
             string exampleJson = null;
             exampleJson = "{\n  \"settings\" : {\n    \"update_checking\" : {\n      \"backend_setting\" : \"backend_setting\"\n    }\n  },\n  \"permissions\" : [ \"permissions\", \"permissions\" ],\n  \"display_name\" : \"display_name\",\n  \"user\" : {\n    \"is_superuser\" : true,\n    \"groups\" : [ \"\", \"\" ],\n    \"id\" : 0,\n    \"username\" : \"username\"\n  }\n}";
-            
+
             var example = exampleJson != null
             ? JsonConvert.DeserializeObject<GetUISettings200Response>(exampleJson)
             : default(GetUISettings200Response);

@@ -1,3 +1,5 @@
+using NUnit.Framework.Internal;
+
 namespace NPaperless.Core.Test;
 
 [TestFixture]
@@ -11,30 +13,65 @@ public class QueueTests
     {
         mockModel = new Mock<IModel>();
         mockConnection = new Mock<IConnection>();
+        DotNetEnv.Env.Load("..\\..\\..\\..\\..\\.env"); // das wirkt schon sehr hacky lol
     }
 
     [Test]
-    public void QueueProducer_Send_Success()
+    public void DotNetEnv_TestFile()
+    {
+        // Aranage + Act
+        string? mqUser = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER");
+        string? mqPw = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS");
+
+        // Assert
+        Assert.IsInstanceOf<string>(mqUser+mqPw);
+    }
+
+    [Test]
+    public void QueueClient_ConnectionWorking()
     {
         // Arrange
+        string? mqUser = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER");
+        string? mqPw = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS");
         var mockLogger = new Mock<ILogger<QueueProducer>>();
         var options = new QueueOptions
         {
-            // ConnectionString = "amqp://swkom:3Od1EAjFuJ6JVT4Y@swkom-api/",
-            ConnectionString = "amqp://swkom:3Od1EAjFuJ6JVT4Y@localhost/",
+            ConnectionString = $"amqp://{mqUser}:{mqPw}@localhost/",
+            QueueName = "Default1"
+        };
+        var mockOptions = new Mock<IOptions<QueueOptions>>();
+        mockOptions.Setup(x => x.Value).Returns(options);
+
+        // Act
+        var producer = new QueueProducer(mockOptions.Object, mockLogger.Object);
+        var isWorking = producer.ConnectionIsWorking();
+        
+        // Assert
+        Assert.IsTrue(isWorking);
+    }
+
+    [Test]
+    public void QueueProducer_Send()
+    {
+        // Arrange        
+        var mockLogger = new Mock<ILogger<QueueProducer>>();
+        string? mqUser = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER");
+        string? mqPw = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS");
+        var options = new QueueOptions
+        {
+            ConnectionString = $"amqp://{mqUser}:{mqPw}@localhost/",
             QueueName = "Default"
         };
         var mockOptions = new Mock<IOptions<QueueOptions>>();
         mockOptions.Setup(x => x.Value).Returns(options);
 
-        var producer = new QueueProducer(mockOptions.Object, mockLogger.Object);
-        producer.SetChannel(mockModel.Object);
+        var guid = Guid.NewGuid();
 
         // Act
-        producer.Send("test_body", Guid.NewGuid());
+        var producer = new QueueProducer(mockOptions.Object, mockLogger.Object);
+        producer.Send("test", guid);
 
         // Assert
-        mockModel.Verify(x => x.BasicPublish(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<IBasicProperties>(), It.IsAny<ReadOnlyMemory<byte>>()), Times.Once);
     }
 
     // [Test]

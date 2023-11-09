@@ -1,4 +1,4 @@
-namespace NPaperless.Core.Queue;
+namespace NPaperless.Core.Queue.Interfaces;
 
 public interface IQueueConsumer
 {
