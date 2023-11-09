@@ -12,4 +12,9 @@
     <PackageReference Include="rabbitmq.client" Version="6.6.0" />
   </ItemGroup>
 
+  <ItemGroup>
+   <Content Include="..\..\.env">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </Content>
+  </ItemGroup>  
 </Project>

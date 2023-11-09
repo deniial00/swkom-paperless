@@ -13,7 +13,7 @@ public class QueueTests
     {
         mockModel = new Mock<IModel>();
         mockConnection = new Mock<IConnection>();
-        DotNetEnv.Env.Load("..\\..\\..\\..\\..\\.env"); // das wirkt schon sehr hacky lol
+        Env.Load();
     }
 
     [Test]
