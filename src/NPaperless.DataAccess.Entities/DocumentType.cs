@@ -1,4 +1,4 @@
-﻿namespace Npaperless.DataAccess.Entities
+﻿namespace NPaperless.DataAccess.Entities
 {
     public class DocumentType
     {
