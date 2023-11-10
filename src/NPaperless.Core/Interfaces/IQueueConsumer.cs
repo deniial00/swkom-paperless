@@ -1,4 +1,5 @@
 using NPaperless.Core.Queue;
+
 namespace NPaperless.Core.Interfaces;
 
 public interface IQueueConsumer

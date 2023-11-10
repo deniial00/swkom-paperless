@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-   <Content Include="..\..\.env">
+    <Content Include="..\..\.env">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </Content>
+    </Content>
   </ItemGroup>  
 </Project>
