@@ -20,6 +20,7 @@ using Newtonsoft.Json;
 using NPaperless.Services.Attributes;
 using NPaperless.Services.DTOs;
 using NPaperless.Core.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace NPaperless.Services.Controllers;
 
@@ -30,16 +31,16 @@ namespace NPaperless.Services.Controllers;
 public class DocumentsApiController : ControllerBase
 { 
     private readonly IQueueProducer qProducer;
-    private readonly IQueueConsumer qConsumer;
+    private readonly ILogger<DocumentsApiController> _logger;
 
     /// <summary>
     ///  
     /// </summary>
     /// <param name="queueProducer"></param>
-    /// <param name="queueConsumer"></param>
-    public DocumentsApiController(IQueueProducer queueProducer, IQueueConsumer queueConsumer){
+    /// <param name="logger"></param>
+    public DocumentsApiController(IQueueProducer queueProducer, ILogger<DocumentsApiController> logger){
         qProducer = queueProducer;
-        qConsumer = queueConsumer;
+        _logger = logger;
         Console.WriteLine($"Connection is working: {qProducer.ConnectionIsWorking()}");
     }
 
@@ -324,16 +325,25 @@ public class DocumentsApiController : ControllerBase
     /// <param name="documentType"></param>
     /// <param name="tags"></param>
     /// <param name="correspondent"></param>
-    /// <param name="document"></param>
+    /// <param name="documents"></param>
     /// <response code="200">Success</response>
     [HttpPost]
     [Route("/api/documents/post_document")]
     [Consumes("multipart/form-data")]
     // [ValidateModelState] // WARUM?!?
     [SwaggerOperation("UploadDocument")]
-    public virtual IActionResult UploadDocument([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime? created, [FromForm (Name = "document_type")]int? documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int? correspondent, [FromForm (Name = "document")]List<System.IO.Stream> document)
+    public virtual IActionResult UploadDocument(
+        [FromForm (Name = "title")]string title,
+        [FromForm (Name = "created")]DateTime? created,
+        [FromForm (Name = "document_type")]int? documentType,
+        [FromForm (Name = "tags")]List<int> tags,
+        [FromForm (Name = "correspondent")]int? correspondent,
+        [FromForm (Name = "document")]List<IFormFile> documents)
     {
         Console.WriteLine("WORKING");
+        foreach (var document in documents) {
+            var stream = document.OpenReadStream();
+        }
         qProducer.Send("test",Guid.NewGuid());
         return StatusCode(200);
     }

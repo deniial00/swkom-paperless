@@ -27,7 +27,6 @@ using NPaperless.Services.OpenApi;
 using NPaperless.Services.Formatters;
 using NPaperless.Core.Queue;
 using NPaperless.Core.Interfaces;
-using Microsoft.JSInterop.Infrastructure;
 
 namespace NPaperless.Services;
 
@@ -65,7 +64,6 @@ public class Startup
         }); // das wird so nd funktionieren - das funktioniert so nd.
     
         services.AddLogging();
-        services.AddSingleton<IQueueConsumer, QueueConsumer>();
         services.AddSingleton<IQueueProducer, QueueProducer>();
 
         services
