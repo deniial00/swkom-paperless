@@ -26,7 +26,6 @@ using NPaperless.Services.Filters;
 using NPaperless.Services.OpenApi;
 using NPaperless.Services.Formatters;
 using NPaperless.Core.Queue;
-using NPaperless.Core.Interfaces;
 
 namespace NPaperless.Services;
 
@@ -64,7 +63,6 @@ public class Startup
         }); // das wird so nd funktionieren - das funktioniert so nd.
     
         services.AddLogging();
-        services.AddSingleton<IQueueProducer, QueueProducer>();
 
         services
             // Don't need the full MVC stack for an API, see https://andrewlock.net/comparing-startup-between-the-asp-net-core-3-templates/

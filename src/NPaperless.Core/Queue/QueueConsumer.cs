@@ -3,11 +3,9 @@ using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-using NPaperless.Core.Interfaces;
-
 namespace NPaperless.Core.Queue;
 
-public class QueueConsumer : QueueClient, IQueueConsumer
+public class QueueConsumer : QueueClient
 {
     private EventingBasicConsumer _consumer;
     private readonly ILogger<QueueConsumer> _logger;

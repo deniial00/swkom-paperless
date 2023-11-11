@@ -8,6 +8,7 @@ public abstract class QueueClient : IDisposable
     private readonly string _url;
     protected string QueueName;
     protected string ExchangeName;
+    protected string? WorkerType;
     private bool disposedValue;
 
 
@@ -31,12 +32,26 @@ public abstract class QueueClient : IDisposable
         InitRabbitMQ();
     }
 
+    protected QueueClient(string url, string queueName, string workerName)
+    : this(url,queueName)
+    {
+        WorkerType = workerName;
+    }
+
     private void InitRabbitMQ()
     {
-        var factory = new ConnectionFactory() { Uri = new Uri(_url) };
+        var factory = new ConnectionFactory
+        {
+            Uri = new Uri(_url),
+            ClientProvidedName = WorkerType
+        };
+        try {
+            // create connection  
+            RabbitMqConnection = factory.CreateConnection();
+        } catch (RabbitMQ.Client.Exceptions.BrokerUnreachableException e) {
+            throw e;
+        }
 
-        // create connection  
-        RabbitMqConnection = factory.CreateConnection();
 
         // create channel  
         RabbitMqChannel = RabbitMqConnection.CreateModel();
