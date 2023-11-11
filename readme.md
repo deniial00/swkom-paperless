@@ -1,6 +1,6 @@
 # BIF5-SWKOM Software Component Systems Projekt
 
-Willkommen zum BIF5-SWKOM Projekt an der FH Technikum Wien. In diesem Projekt erstellen wir ein ein Dokumentenverwaltungssystem. Das Projekt konzentriert sich auf die Verwendung von Microservices, REST, OpenAPI, den Aufbau wiederverwendbarer Komponenten und die Anwendung fortschrittlicher Softwaretechnik-Konzepte.
+Willkommen zum BIF5-SWKOM Projekt an der FH Technikum Wien der Gruppe D (Mario Gussnig, Hofbauer Daniel). In diesem Projekt erstellen wir ein ein Dokumentenverwaltungssystem. Das Projekt konzentriert sich auf die Verwendung von Microservices, REST, OpenAPI, den Aufbau wiederverwendbarer Komponenten und die Anwendung fortschrittlicher Softwaretechnik-Konzepte.
 
 ### Zielarchitektur
 
@@ -13,7 +13,7 @@ Um das Projekt zu starten, führen Sie den folgenden Befehl aus:
 ```bash
 docker-compose up -d
 ```
-Stellen Sie sicher, dass Sie die entsprechenden Werte für PostgreSQL, RabbitMQ und pgAdmin bereitstellen, um einen erfolgreichen Start zu gewährleisten. Nach dem Start können Sie auf die Dienste per `localhost:80/` zugreifen und mit der Dokumentenverwaltung beginnen.
+Stelle sicher, dass die entsprechenden Umgebungsvariablen in `/.env' für PostgreSQL, RabbitMQ und pgAdmin gesetzt sind, um einen erfolgreichen Start zu gewährleisten. Nach dem Start kann man auf die Dienste per `localhost:80/` zugreifen und mit der Dokumentenverwaltung beginnen.
 
 ### Erforderliche Umgebungsvariablen:
 
@@ -49,11 +49,11 @@ Der Entwicklungsprozess ist in 7 Sprints organisiert, jeder dauert etwa 2 Wochen
 
 ### Frontend: Paperless-ngx
 
-Als Frontend wird das UI von [Paperless-ngx](https://docs.paperless-ngx.com/) verwendet. Dieses Open-Source-Dokumentenverwaltungssystem ermöglicht die Verwandlung physischer Dokumente in ein durchsuchbares Online-Archiv. Beachten Sie, dass das UI bereits vorab kompiliert (precompiled) ist, was auf eine effiziente Bereitstellung hinweist.
+Als Frontend wird das UI von [Paperless-ngx](https://docs.paperless-ngx.com/) verwendet. Dieses Open-Source-Dokumentenverwaltungssystem ermöglicht die Verwandlung physischer Dokumente in ein durchsuchbares Online-Archiv. Das UI ist bereits vorab kompiliert (precompiled), da dieses Projekt auf die Implementierung eines Backends fokkusiert ist.
 
 ### API-Erstellung mit OpenAPI Contract
 
-Für die API-Entwicklung wurde ein OpenAPI-Vertrag bereitgestellt. Dieser Vertrag dient als Grundlage für die Erstellung der RESTful API, die verschiedene Funktionalitäten des Dokumentenverwaltungssystems ermöglicht.
+Für die API-Entwicklung wurde ein OpenAPI-Contract vom Kurs bereitgestellt. Dieser Vertrag dient als Grundlage für die Erstellung der RESTful API, die verschiedene Funktionalitäten des Dokumentenverwaltungssystems ermöglicht.
 
 ### Verwendete Technologien
 
@@ -66,7 +66,7 @@ Die Technologien, die im Projekt eingesetzt werden, umfassen:
 - **Framework:** .NET 7.0
 - **Suchmaschine:** ElasticSearch
 
-### Docker-Umgebung für Microservices
+### Docker-Container für Microservices
 
 Ein Hauptziel des Projekts besteht darin, verschiedene Microservices zu entwickeln und in einer Docker-Umgebung bereitzustellen. Docker ermöglicht die Containerisierung der Microservices, was eine einfache Bereitstellung, Skalierbarkeit und Wartung ermöglicht.
 
