@@ -51,6 +51,12 @@
 
 ## Sprint 5 (Abgabe: ??)
 
+- [ ] file storage
+  - [ ] volumes erstellen
+- [ ] elastic-search
+  - [ ] container aufbauen
+  - [ ] service worker erstellen
+
 [Business Logic](https://moodle.technikum-wien.at/mod/lesson/view.php?id=1487102)
 [Integration Tests](https://moodle.technikum-wien.at/mod/lesson/view.php?id=1487111)
 
