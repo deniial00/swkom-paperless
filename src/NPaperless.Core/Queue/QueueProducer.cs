@@ -1,12 +1,11 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
-
-using NPaperless.Core.Interfaces;
+using NPaperless.Core.Entities;
 
 namespace NPaperless.Core.Queue;
 
-public class QueueProducer : QueueClient, IQueueProducer
+public class QueueProducer : QueueClient
 {
     private readonly ILogger<QueueProducer> _logger;
 
@@ -16,7 +15,7 @@ public class QueueProducer : QueueClient, IQueueProducer
         this._logger = logger;
     }
 
-    public void Send(string body, Guid documentId)
+    public void Send(Document doc, Guid documentId)
     {
         _logger.LogInformation($"Sending message with id {documentId}");
 
@@ -27,6 +26,6 @@ public class QueueProducer : QueueClient, IQueueProducer
                                      routingKey: $"{QueueName}.*",
                                      mandatory: false,
                                      basicProperties: properties,
-                                     body: System.Text.Encoding.UTF8.GetBytes(body));
+                                     body: doc.ToBytes());
     }
 }

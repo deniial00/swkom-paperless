@@ -12,12 +12,18 @@ WORKDIR /src
 COPY [".env", "/.env"]
 COPY ["src/NPaperless.Services/NPaperless.Services.csproj", "NPaperless.Services/"]
 COPY ["src/NPaperless.Core/NPaperless.Core.csproj", "NPaperless.Core/"]
+COPY ["src/NPaperless.Core.Entities/NPaperless.Core.Entities.csproj", "NPaperless.Core.Entities/"]
+COPY ["src/NPaperless.Core.Interfaces/NPaperless.Core.Interfaces.csproj", "NPaperless.Core.Interfaces/"]
 
 # NuGet restore
 RUN dotnet restore "NPaperless.Services/NPaperless.Services.csproj"
 COPY ["src/NPaperless.Services", "NPaperless.Services/"]
 RUN dotnet restore "NPaperless.Core/NPaperless.Core.csproj"
 COPY ["src/NPaperless.Core", "NPaperless.Core/"]
+RUN dotnet restore "NPaperless.Core.Entities/NPaperless.Core.Entities.csproj"
+COPY ["src/NPaperless.Core.Entities", "NPaperless.Core.Entities/"]
+RUN dotnet restore "NPaperless.Core.Interfaces/NPaperless.Core.Interfaces.csproj"
+COPY ["src/NPaperless.Core.Interfaces", "NPaperless.Core.Interfaces/"]
 
 # Build the API
 WORKDIR "/src/NPaperless.Services"

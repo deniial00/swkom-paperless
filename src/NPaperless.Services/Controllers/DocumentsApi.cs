@@ -19,7 +19,10 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using NPaperless.Services.Attributes;
 using NPaperless.Services.DTOs;
-using NPaperless.Core.Interfaces;
+using Microsoft.Extensions.Logging;
+using NPaperless.Core.Queue;
+using Microsoft.Extensions.Options;
+using System.IO;
 
 namespace NPaperless.Services.Controllers;
 
@@ -29,18 +32,23 @@ namespace NPaperless.Services.Controllers;
 [ApiController]
 public class DocumentsApiController : ControllerBase
 { 
-    private readonly IQueueProducer qProducer;
-    private readonly IQueueConsumer qConsumer;
+    private readonly QueueProducer _qProducer;
+    private readonly ILogger<DocumentsApiController> _logger;
 
     /// <summary>
     ///  
     /// </summary>
-    /// <param name="queueProducer"></param>
-    /// <param name="queueConsumer"></param>
-    public DocumentsApiController(IQueueProducer queueProducer, IQueueConsumer queueConsumer){
-        qProducer = queueProducer;
-        qConsumer = queueConsumer;
-        Console.WriteLine($"Connection is working: {qProducer.ConnectionIsWorking()}");
+    /// <param name="queueOptions"></param>
+    /// <param name="logger"></param>
+    /// <param name="qProducerLogger"></param>
+    public DocumentsApiController(
+        IOptions<QueueOptions> queueOptions,
+        ILogger<DocumentsApiController> logger,
+        ILogger<QueueProducer> qProducerLogger)
+    {
+        _qProducer = new QueueProducer(queueOptions, qProducerLogger);
+        _logger = logger;
+        Console.WriteLine($"Connection is working: {_qProducer.ConnectionIsWorking()}");
     }
 
     /// <summary>
@@ -166,17 +174,17 @@ public class DocumentsApiController : ControllerBase
     [Route("/api/documents/{id}/preview/")]
     [ValidateModelState]
     [SwaggerOperation("GetDocumentPreview")]
-    [SwaggerResponse(statusCode: 200, type: typeof(System.IO.Stream), description: "Success")]
+    [SwaggerResponse(statusCode: 200, type: typeof(Stream), description: "Success")]
     public virtual IActionResult GetDocumentPreview([FromRoute (Name = "id")][Required]int id)
     {
 
         //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-        // return StatusCode(200, default(System.IO.Stream));
+        // return StatusCode(200, default(Stream));
         string exampleJson = null;
         
         var example = exampleJson != null
-        ? JsonConvert.DeserializeObject<System.IO.Stream>(exampleJson)
-        : default(System.IO.Stream);
+        ? JsonConvert.DeserializeObject<Stream>(exampleJson)
+        : default(Stream);
         //TODO: Change the data returned
         return new ObjectResult(example);
     }
@@ -215,16 +223,16 @@ public class DocumentsApiController : ControllerBase
     [Route("/api/documents/{id}/thumb/")]
     [ValidateModelState]
     [SwaggerOperation("GetDocumentThumb")]
-    [SwaggerResponse(statusCode: 200, type: typeof(System.IO.Stream), description: "Success")]
+    [SwaggerResponse(statusCode: 200, type: typeof(Stream), description: "Success")]
     public virtual IActionResult GetDocumentThumb([FromRoute (Name = "id")][Required]int id)
     {
 
         //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-        // return StatusCode(200, default(System.IO.Stream));
+        // return StatusCode(200, default(Stream));
         string exampleJson = null;
         
         var example = exampleJson != null
-        ? JsonConvert.DeserializeObject<System.IO.Stream>(exampleJson)
+        ? JsonConvert.DeserializeObject<Stream>(exampleJson)
         : default(System.IO.Stream);
         //TODO: Change the data returned
         return new ObjectResult(example);
@@ -324,17 +332,25 @@ public class DocumentsApiController : ControllerBase
     /// <param name="documentType"></param>
     /// <param name="tags"></param>
     /// <param name="correspondent"></param>
-    /// <param name="document"></param>
+    /// <param name="files"></param>
     /// <response code="200">Success</response>
     [HttpPost]
     [Route("/api/documents/post_document")]
     [Consumes("multipart/form-data")]
     // [ValidateModelState] // WARUM?!?
     [SwaggerOperation("UploadDocument")]
-    public virtual IActionResult UploadDocument([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime? created, [FromForm (Name = "document_type")]int? documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int? correspondent, [FromForm (Name = "document")]List<System.IO.Stream> document)
+    public virtual IActionResult UploadDocument(
+        [FromForm (Name = "title")]string title,
+        [FromForm (Name = "created")]DateTime? created,
+        [FromForm (Name = "document_type")]int? documentType,
+        [FromForm (Name = "tags")]List<int> tags,
+        [FromForm (Name = "correspondent")]int? correspondent,
+        [FromForm (Name = "document")]List<IFormFile> files)
     {
         Console.WriteLine("WORKING");
-        qProducer.Send("test",Guid.NewGuid());
+        foreach (var file in files) {
+            
+        }
         return StatusCode(200);
     }
 }
