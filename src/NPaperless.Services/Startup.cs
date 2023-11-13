@@ -26,6 +26,8 @@ using NPaperless.Services.Filters;
 using NPaperless.Services.OpenApi;
 using NPaperless.Services.Formatters;
 using NPaperless.Core.Queue;
+using NPaperless.DataAccess.Sql;
+using Microsoft.EntityFrameworkCore;
 
 namespace NPaperless.Services;
 
@@ -120,6 +122,10 @@ public class Startup
                                             .AllowAnyHeader();
                                     });
                 });
+
+            services
+                .AddDbContext<NPaperlessDbContext>(options =>
+                    options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
     }
 
     /// <summary>

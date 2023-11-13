@@ -31,7 +31,7 @@ services:
         - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
   database:
     container_name: swkom-db
-    image: postgres
+    image: postgis/postgis:latest
     restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}

@@ -1,19 +1,31 @@
-namespace NPaperless.DataAccess.Test;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using NPaperless.DataAccess.Sql;
 
-public class Tests
+namespace NPaperless.DataAccess.Test
 {
-    [SetUp]
-    public void Setup()
+    public class Tests
     {
-    }
+        private IConfiguration _configuration;
 
-    [Test]
+        [SetUp]
+        public void Setup()
+        {
+            var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+            _configuration = new ConfigurationBuilder().AddJsonFile(appSettingsPath).Build();
+        }
+
+        [Test]
         public void Can_Create_NPaperlessDbContext()
         {
-            using (var context = new Sql.NPaperlessDbContext())
+            //var optionsBuilder = new DbContextOptionsBuilder<NPaperlessDbContext>()
+            //    .UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
+
+            using (var context = new NPaperlessDbContext(_configuration))
             {
-                context.Database.Connection.Open();
-                Assert.True(context.Database.Connection.State == System.Data.ConnectionState.Open);
+                context.Database.OpenConnection();
+                Assert.True(context.Database.GetDbConnection().State == System.Data.ConnectionState.Open);
             }
         }
+    }
 }
