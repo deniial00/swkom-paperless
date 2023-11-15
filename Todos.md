@@ -23,7 +23,11 @@
 
 - [ ] Data-Access-Layer aufbauen
   - [x] Projekt anlegen
-  - [ ] OEM-Mapper integrieren (AutoMapper)
+  - [x] ORM-Mapper integrieren
+  - [ ] AutoMapper integrieren
+  - [ ] bei Endpoints tatsächlich DB ansprechen
+    - [ ] Service-Klassen für alle Services erstellen
+    - [ ] Funktion dieser Klassen in Services Projekt callen
 - [x] Broker integrieren (Pipeline um request engegen zu nehmen und zu verarbeiten)
   - [x] Framework auswählen
     - [x] [RabbitMQ](https://www.rabbitmq.com/)
