@@ -1,0 +1,21 @@
+# Ignore all bin and obj folders
+[Bb]in/
+[Oo]bj/
+
+# Ignore .suo files
+*.suo
+
+# Ignore user-specific files
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore Visual Studio's temporary files
+.vs/
+
+# Ignore all .dll and .exe files
+*.dll
+*.exe
+
+# Ignore all .local.env files
+*.env.local
