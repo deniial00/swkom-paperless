@@ -20,12 +20,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using PaperLessApi.Authentication;
-using PaperLessApi.Filters;
-using PaperLessApi.OpenApi;
-using PaperLessApi.Formatters;
+using NPaperless.API.Authentication;
+using NPaperless.API.Filters;
+using NPaperless.API.OpenApi;
+using NPaperless.API.Formatters;
+using AutoMapper;
 
-namespace PaperLessApi
+namespace NPaperless.API
 {
     /// <summary>
     /// Startup
@@ -52,6 +53,20 @@ namespace PaperLessApi
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+			 services
+				.AddCors(options =>
+				{
+					options.AddPolicy(name: "CORS",
+									policy  =>
+									{
+										policy
+											.WithOrigins("http://localhost:*")
+											.AllowAnyHeader();
+									});
+				});
+
+			services
+				.AddAutoMapper(typeof(AutoMapperProfile));
 
             // Add framework services.
             services
@@ -108,6 +123,8 @@ namespace PaperLessApi
         /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+			app.UseCors("CORS");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

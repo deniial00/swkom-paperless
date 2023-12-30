@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace PaperLessApi.Authentication
+namespace NPaperless.API.Authentication
 {
     /// <summary>
     /// A requirement that an ApiKey must be present.

@@ -13,7 +13,7 @@ using System.ComponentModel;
 using System.Globalization;
 using Newtonsoft.Json;
 
-namespace PaperLessApi.Converters
+namespace NPaperless.API.Converters
 {
     /// <summary>
     /// Custom string to enum converter

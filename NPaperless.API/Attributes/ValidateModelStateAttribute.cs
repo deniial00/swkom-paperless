@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace PaperLessApi.Attributes
+namespace NPaperless.API.Attributes
 {
     /// <summary>
     /// Model state validation attribute

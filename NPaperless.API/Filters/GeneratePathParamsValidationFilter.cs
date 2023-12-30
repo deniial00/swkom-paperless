@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace PaperLessApi.Filters
+namespace NPaperless.API.Filters
 {
     /// <summary>
     /// Path Parameter Validation Rules Filter

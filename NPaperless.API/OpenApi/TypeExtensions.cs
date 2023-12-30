@@ -12,7 +12,7 @@ using System;
 using System.Linq;
 using System.Text;
 
-namespace PaperLessApi.OpenApi
+namespace NPaperless.API.OpenApi
 {
     /// <summary>
     /// Replacement utilities from Swashbuckle.AspNetCore.SwaggerGen which are not in 5.x

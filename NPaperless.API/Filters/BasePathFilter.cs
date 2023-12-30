@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace PaperLessApi.Filters
+namespace NPaperless.API.Filters
 {
     /// <summary>
     /// BasePath Document Filter sets BasePath property of OpenAPI and removes it from the individual URL paths

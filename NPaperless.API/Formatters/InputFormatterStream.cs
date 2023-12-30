@@ -13,7 +13,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Formatters;
 
-namespace PaperLessApi.Formatters
+namespace NPaperless.API.Formatters
 {
     /// <inheritdoc />
     public class InputFormatterStream : InputFormatter

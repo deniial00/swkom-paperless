@@ -17,10 +17,10 @@ using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
-using PaperLessApi.Attributes;
-using PaperLessApi.DTOs;
+using NPaperless.API.Attributes;
+using NPaperless.API.DTOs;
 
-namespace PaperLessApi.Controllers
+namespace NPaperless.API.Controllers
 { 
     /// <summary>
     /// 
