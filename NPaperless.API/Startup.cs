@@ -25,6 +25,11 @@ using NPaperless.API.Filters;
 using NPaperless.API.OpenApi;
 using NPaperless.API.Formatters;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
+using NPaperless.BL.Interfaces;
+using NPaperless.BL;
+using NPaperless.BL.Entities;
+using FluentValidation;
 
 namespace NPaperless.API
 {
@@ -67,6 +72,21 @@ namespace NPaperless.API
 
 			services
 				.AddAutoMapper(typeof(AutoMapperProfile));
+
+			services.AddScoped<IConfigApiLogic, ConfigApiLogic>();
+			services.AddScoped<ICorrespondentLogic, CorrespondentLogic>();
+			services.AddScoped<IDocTagLogic, DocTagLogic>();
+			services.AddScoped<IDocumentLogic, DocumentLogic>();
+			services.AddScoped<IDocumentTypeLogic, DocumentTypeLogic>();
+			services.AddScoped<ILoginApiLogic, LoginApiLogic>();
+			services.AddScoped<IUserInfoLogic, UserInfoLogic>();
+
+			services.AddScoped<IValidator<Correspondent>, CorrespondentValidator>();
+			services.AddScoped<IValidator<DocTag>, DocTagValidator>();
+			services.AddScoped<IValidator<Document>, DocumentValidator>();
+			services.AddScoped<IValidator<DocumentType>, DocumentTypeValidator>();
+			services.AddScoped<IValidator<UserInfo>, UserInfoValidator>();
+			
 
             // Add framework services.
             services
