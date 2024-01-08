@@ -13,6 +13,9 @@ COPY ["NPaperless.API/NPaperless.API.csproj", "NPaperless.API/"]
 COPY ["NPaperless.BL/NPaperless.BL.csproj", "NPaperless.BL/"]
 COPY ["NPaperless.BL.Entities/NPaperless.BL.Entities.csproj", "NPaperless.BL.Entities/"]
 COPY ["NPaperless.BL.Interfaces/NPaperless.BL.Interfaces.csproj", "NPaperless.BL.Interfaces/"]
+COPY ["NPaperless.DA.Entities/NPaperless.DA.Entities.csproj", "NPaperless.DA.Entities/"]
+COPY ["NPaperless.DA.Interfaces/NPaperless.DA.Interfaces.csproj", "NPaperless.DA.Interfaces/"]
+COPY ["NPaperless.DA.Sql/NPaperless.DA.Sql.csproj", "NPaperless.DA.Sql/"]
 
 # NuGet restore
 RUN dotnet restore "NPaperless.API/NPaperless.API.csproj"
@@ -23,6 +26,12 @@ RUN dotnet restore "NPaperless.BL.Entities/NPaperless.BL.Entities.csproj"
 COPY ["NPaperless.BL.Entities/", "NPaperless.BL.Entities/"]
 RUN dotnet restore "NPaperless.BL.Interfaces/NPaperless.BL.Interfaces.csproj"
 COPY ["NPaperless.BL.Interfaces/", "NPaperless.BL.Interfaces/"]
+RUN dotnet restore "NPaperless.DA.Entities/NPaperless.DA.Entities.csproj"
+COPY ["NPaperless.DA.Entities/", "NPaperless.DA.Entities/"]
+RUN dotnet restore "NPaperless.DA.Interfaces/NPaperless.DA.Interfaces.csproj"
+COPY ["NPaperless.DA.Interfaces/", "NPaperless.DA.Interfaces/"]
+RUN dotnet restore "NPaperless.DA.Sql/NPaperless.DA.Sql.csproj"
+COPY ["NPaperless.DA.Sql/", "NPaperless.DA.Sql/"]
 
 # Build the API
 WORKDIR "/src/NPaperless.API"

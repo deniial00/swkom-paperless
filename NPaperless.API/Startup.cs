@@ -30,6 +30,9 @@ using NPaperless.BL.Interfaces;
 using NPaperless.BL;
 using NPaperless.BL.Entities;
 using FluentValidation;
+using NPaperless.DA.Sql;
+using Microsoft.EntityFrameworkCore;
+using NPaperless.DA.Interfaces;
 
 namespace NPaperless.API
 {
@@ -86,6 +89,14 @@ namespace NPaperless.API
 			services.AddScoped<IValidator<Document>, DocumentValidator>();
 			services.AddScoped<IValidator<DocumentType>, DocumentTypeValidator>();
 			services.AddScoped<IValidator<UserInfo>, UserInfoValidator>();
+
+			services.AddScoped<IDocumentRepository, DocumentRepository>();
+            services.AddScoped<IDocumentTypeRepository, DocumentTypeRepository>();
+            services.AddScoped<IDocTagRepository, DocTagRepository>();
+            services.AddScoped<ICorrespondentRepository, CorrespondentRepository>();
+
+			services.AddDbContext<NPaperlessDbContext>(options =>
+                options.UseNpgsql(Configuration.GetValue<string>("ConnectionString")));
 			
 
             // Add framework services.
