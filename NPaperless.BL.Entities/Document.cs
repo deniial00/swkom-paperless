@@ -3,7 +3,7 @@ namespace NPaperless.BL.Entities {
 	{
 		public Guid Id { get; set; }
 		public int Correspondent { get; set; }
-		public string DocumentType { get; set; }
+		public int DocumentType { get; set; }
 		public int StoragePath { get; set; }
 		public string Title { get; set; }
 		public readonly byte[] Content;

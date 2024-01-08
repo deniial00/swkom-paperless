@@ -19,6 +19,11 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using NPaperless.API.Attributes;
 using NPaperless.API.DTOs;
+using NPaperless.BL.Interfaces;
+using AutoMapper;
+using System.Threading.Tasks;
+using NPaperless.BL.Entities;
+using System.Security;
 
 namespace NPaperless.API.Controllers
 { 
@@ -28,6 +33,16 @@ namespace NPaperless.API.Controllers
     [ApiController]
     public class DocumentsApiController : ControllerBase
     { 
+
+		private readonly IMapper _mapper;
+		private readonly IDocumentLogic _logic;
+
+		public DocumentsApiController(IMapper mapper, IDocumentLogic logic)
+		{
+			_mapper = mapper;
+			_logic = logic;
+		}
+
         /// <summary>
         /// 
         /// </summary>
@@ -58,11 +73,8 @@ namespace NPaperless.API.Controllers
         [SwaggerOperation("DeleteDocument")]
         public virtual IActionResult DeleteDocument([FromRoute (Name = "id")][Required]int id)
         {
-
-            //TODO: Uncomment the next line to return response 204 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            return StatusCode(204);
-
-            throw new NotImplementedException();
+			var result = _logic.DeleteDocument(id);
+        	return result == null ? StatusCode(500) : Ok(result);
         }
 
         /// <summary>
@@ -104,17 +116,9 @@ namespace NPaperless.API.Controllers
         [SwaggerResponse(statusCode: 200, type: typeof(GetDocument200Response), description: "Success")]
         public virtual IActionResult GetDocument([FromRoute (Name = "id")][Required]int id, [FromQuery (Name = "page")]int? page, [FromQuery (Name = "full_perms")]bool? fullPerms)
         {
-
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(GetDocument200Response));
-            string exampleJson = null;
-            exampleJson = "{\n  \"owner\" : 7,\n  \"archive_serial_number\" : 2,\n  \"notes\" : [ {\n    \"note\" : \"note\",\n    \"created\" : \"created\",\n    \"document\" : 1,\n    \"id\" : 7,\n    \"user\" : 1\n  }, {\n    \"note\" : \"note\",\n    \"created\" : \"created\",\n    \"document\" : 1,\n    \"id\" : 7,\n    \"user\" : 1\n  } ],\n  \"added\" : \"added\",\n  \"created\" : \"created\",\n  \"title\" : \"title\",\n  \"content\" : \"content\",\n  \"tags\" : [ 5, 5 ],\n  \"storage_path\" : 5,\n  \"permissions\" : {\n    \"view\" : {\n      \"groups\" : [ 3, 3 ],\n      \"users\" : [ 9, 9 ]\n    },\n    \"change\" : {\n      \"groups\" : [ 3, 3 ],\n      \"users\" : [ 9, 9 ]\n    }\n  },\n  \"archived_file_name\" : \"archived_file_name\",\n  \"modified\" : \"modified\",\n  \"correspondent\" : 6,\n  \"original_file_name\" : \"original_file_name\",\n  \"id\" : 0,\n  \"created_date\" : \"created_date\",\n  \"document_type\" : 1\n}";
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<GetDocument200Response>(exampleJson)
-            : default(GetDocument200Response);
-            //TODO: Change the data returned
-            return new ObjectResult(example);
+            // result = "{\n  \"owner\" : 7,\n  \"archive_serial_number\" : 2,\n  \"notes\" : [ {\n    \"note\" : \"note\",\n    \"created\" : \"created\",\n    \"document\" : 1,\n    \"id\" : 7,\n    \"user\" : 1\n  }, {\n    \"note\" : \"note\",\n    \"created\" : \"created\",\n    \"document\" : 1,\n    \"id\" : 7,\n    \"user\" : 1\n  } ],\n  \"added\" : \"added\",\n  \"created\" : \"created\",\n  \"title\" : \"title\",\n  \"content\" : \"content\",\n  \"tags\" : [ 5, 5 ],\n  \"storage_path\" : 5,\n  \"permissions\" : {\n    \"view\" : {\n      \"groups\" : [ 3, 3 ],\n      \"users\" : [ 9, 9 ]\n    },\n    \"change\" : {\n      \"groups\" : [ 3, 3 ],\n      \"users\" : [ 9, 9 ]\n    }\n  },\n  \"archived_file_name\" : \"archived_file_name\",\n  \"modified\" : \"modified\",\n  \"correspondent\" : 6,\n  \"original_file_name\" : \"original_file_name\",\n  \"id\" : 0,\n  \"created_date\" : \"created_date\",\n  \"document_type\" : 1\n}";
+			var result = _logic.GetDocument(id, page, fullPerms);
+        	return result == null ? StatusCode(500) : Ok(result);
         }
 
         /// <summary>
@@ -288,17 +292,20 @@ namespace NPaperless.API.Controllers
         [SwaggerResponse(statusCode: 200, type: typeof(UpdateDocument200Response), description: "Success")]
         public virtual IActionResult UpdateDocument([FromRoute (Name = "id")][Required]int id, [FromBody]UpdateDocumentRequest updateDocumentRequest)
         {
-
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(UpdateDocument200Response));
-            string exampleJson = null;
-            exampleJson = "{\n  \"owner\" : 7,\n  \"user_can_change\" : true,\n  \"archive_serial_number\" : 2,\n  \"notes\" : [ \"\", \"\" ],\n  \"added\" : \"added\",\n  \"created\" : \"created\",\n  \"title\" : \"title\",\n  \"content\" : \"content\",\n  \"tags\" : [ 5, 5 ],\n  \"storage_path\" : 5,\n  \"archived_file_name\" : \"archived_file_name\",\n  \"modified\" : \"modified\",\n  \"correspondent\" : 6,\n  \"original_file_name\" : \"original_file_name\",\n  \"id\" : 0,\n  \"created_date\" : \"created_date\",\n  \"document_type\" : 1\n}";
+            // string exampleJson = null;
+            // exampleJson = "{\n  \"owner\" : 7,\n  \"user_can_change\" : true,\n  \"archive_serial_number\" : 2,\n  \"notes\" : [ \"\", \"\" ],\n  \"added\" : \"added\",\n  \"created\" : \"created\",\n  \"title\" : \"title\",\n  \"content\" : \"content\",\n  \"tags\" : [ 5, 5 ],\n  \"storage_path\" : 5,\n  \"archived_file_name\" : \"archived_file_name\",\n  \"modified\" : \"modified\",\n  \"correspondent\" : 6,\n  \"original_file_name\" : \"original_file_name\",\n  \"id\" : 0,\n  \"created_date\" : \"created_date\",\n  \"document_type\" : 1\n}";
             
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<UpdateDocument200Response>(exampleJson)
-            : default(UpdateDocument200Response);
-            //TODO: Change the data returned
-            return new ObjectResult(example);
+            // var example = exampleJson != null
+            // ? JsonConvert.DeserializeObject<UpdateDocument200Response>(exampleJson)
+            // : default(UpdateDocument200Response);
+            // //TODO: Change the data returned
+            // return new ObjectResult(example);
+
+			// todo: richtige parameter übergeben und schauen, wie das überhaupt funktionieren soll
+			var result = _logic.UpdateDocument();
+			return result == null ? StatusCode(500) : Ok(result);
         }
 
         /// <summary>
@@ -309,20 +316,26 @@ namespace NPaperless.API.Controllers
         /// <param name="documentType"></param>
         /// <param name="tags"></param>
         /// <param name="correspondent"></param>
-        /// <param name="document"></param>
+        /// <param name="documentFile"></param>
         /// <response code="200">Success</response>
         [HttpPost]
         [Route("/api/documents/post_document/")]
         [Consumes("multipart/form-data")]
         [ValidateModelState]
         [SwaggerOperation("UploadDocument")]
-        public virtual IActionResult UploadDocument([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime? created, [FromForm (Name = "document_type")]int? documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int? correspondent, [FromForm (Name = "document")]List<System.IO.Stream> document)
-        {
+		public virtual IActionResult UploadDocument([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime created, [FromForm (Name = "document_type")]int documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int correspondent, [FromForm (Name = "document")]IEnumerable<IFormFile> documentFile)
+		{
+			var newDocument = new NPaperless.BL.Entities.Document
+			{
+				Title = title,
+				Created = created,
+				DocumentType = documentType,
+				Tags = tags,
+				Correspondent = correspondent
+			};
 
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            return StatusCode(200);
-
-            throw new NotImplementedException();
-        }
+			var result = _logic.CreateDocument(newDocument, documentFile);
+			return result == null ? StatusCode(500) : Ok(result);
+		}
     }
 }
