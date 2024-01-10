@@ -33,6 +33,11 @@ using FluentValidation;
 using NPaperless.DA.Sql;
 using Microsoft.EntityFrameworkCore;
 using NPaperless.DA.Interfaces;
+using RabbitMQ.Client;
+using Minio;
+using Minio.Exceptions;
+using Minio.DataModel.Args;
+using Microsoft.Extensions.Options;
 
 namespace NPaperless.API
 {
@@ -98,6 +103,15 @@ namespace NPaperless.API
 			services.AddDbContext<NPaperlessDbContext>(options =>
                 options.UseNpgsql(Configuration.GetValue<string>("ConnectionString")));
 			
+			services.AddSingleton<IRabbitMQService, RabbitMQService>();
+
+			services.AddSingleton<IMinioClient>(
+                new MinioClient()
+					.WithEndpoint("swkom-minio", 9000)
+					.WithCredentials("swkom-minio", "swkom-minio")
+					.WithSSL(false)
+					.Build()
+			);
 
             // Add framework services.
             services
