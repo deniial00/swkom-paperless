@@ -54,7 +54,7 @@ namespace NPaperless.BL {
 				}
 				catch (MinioException e)
 				{
-					Console.WriteLine("File Upload Error: {0}", e.Message);
+					throw new BLException("Error uploading file: ", e);
 				}
 			}
 
@@ -62,13 +62,13 @@ namespace NPaperless.BL {
 		}
 
 		public string GetDocument(int id, int? page, bool? fullPerms){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 		public bool DeleteDocument(int id){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 		public string UpdateDocument(){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 	}
 }

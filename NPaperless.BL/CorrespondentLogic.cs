@@ -10,16 +10,16 @@ namespace NPaperless.BL {
         }
 		
 		public string CreateCorrespondent(){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 		public string GetCorrespondent(){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 		public bool DeleteCorrespondent(int id){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 		public string UpdateCorrespondent(){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 	}
 }

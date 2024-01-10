@@ -11,7 +11,7 @@ namespace NPaperless.DA.Sql
 
         public UserInfoRepository(NPaperlessDbContext dbContext)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContext = dbContext ?? throw new DAException(nameof(dbContext));
         }
 
         public UserInfo GetById(long id)
@@ -43,6 +43,9 @@ namespace NPaperless.DA.Sql
                 _dbContext.UserInfos.Remove(userInfo);
                 _dbContext.SaveChanges();
             }
+			else{
+				throw new DAException("Error: No userInfo with the id " + id + " was found!");
+			}
         }
     }
 }

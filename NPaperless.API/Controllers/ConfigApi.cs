@@ -52,8 +52,7 @@ namespace NPaperless.API.Controllers
 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             return StatusCode(200);
-
-            throw new NotImplementedException();
+            throw new APIException("NotImplementedException");
         }
 
         /// <summary>
@@ -117,7 +116,7 @@ namespace NPaperless.API.Controllers
             //TODO: Uncomment the next line to return response 204 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             return StatusCode(204);
 
-            throw new NotImplementedException();
+            throw new APIException("NotImplementedException");
         }
 
         /// <summary>
@@ -134,7 +133,7 @@ namespace NPaperless.API.Controllers
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             return StatusCode(200);
 
-            throw new NotImplementedException();
+            throw new APIException("NotImplementedException");
         }
 
         /// <summary>
