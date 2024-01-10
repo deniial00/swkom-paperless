@@ -19,6 +19,8 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using NPaperless.API.Attributes;
 using NPaperless.API.DTOs;
+using NPaperless.BL.Interfaces;
+using AutoMapper;
 
 namespace NPaperless.API.Controllers
 { 
@@ -28,6 +30,15 @@ namespace NPaperless.API.Controllers
     [ApiController]
     public class TagsApiController : ControllerBase
     { 
+		private readonly IDocTagLogic _logic;
+		private readonly IMapper _mapper;
+
+		public TagsApiController(IMapper mapper, IDocTagLogic logic)
+		{
+			_mapper = mapper;
+			_logic = logic;
+		}
+
         /// <summary>
         /// 
         /// </summary>

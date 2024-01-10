@@ -27,7 +27,7 @@ namespace NPaperless.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                    webBuilder.UseStartup<Startup>()
-                             .UseUrls("http://0.0.0.0:8081/");
+                             .UseUrls("http://0.0.0.0:8080/");
                 });
     }
 }

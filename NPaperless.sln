@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPaperless.DA.Interfaces", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPaperless.DA.Sql", "NPaperless.DA.Sql\NPaperless.DA.Sql.csproj", "{C302668F-06AD-4660-8CE9-55DD5B1026C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPaperless.SA", "Npaperless.SA\NPaperless.SA.csproj", "{3A52CB2F-978E-4BE0-8CEB-56058BB215B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPaperless.SA.Interfaces", "NPaperless.SA.Interfaces\NPaperless.SA.Interfaces.csproj", "{3578BF60-E4E2-48FB-829A-205A74F9579F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +58,17 @@ Global
 		{C302668F-06AD-4660-8CE9-55DD5B1026C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C302668F-06AD-4660-8CE9-55DD5B1026C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C302668F-06AD-4660-8CE9-55DD5B1026C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C2527B6-E798-44A9-A57C-A5CABF3E3033}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C2527B6-E798-44A9-A57C-A5CABF3E3033}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C2527B6-E798-44A9-A57C-A5CABF3E3033}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C2527B6-E798-44A9-A57C-A5CABF3E3033}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A52CB2F-978E-4BE0-8CEB-56058BB215B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A52CB2F-978E-4BE0-8CEB-56058BB215B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A52CB2F-978E-4BE0-8CEB-56058BB215B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A52CB2F-978E-4BE0-8CEB-56058BB215B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3578BF60-E4E2-48FB-829A-205A74F9579F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3578BF60-E4E2-48FB-829A-205A74F9579F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3578BF60-E4E2-48FB-829A-205A74F9579F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3578BF60-E4E2-48FB-829A-205A74F9579F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
