@@ -19,6 +19,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using NPaperless.API.Attributes;
 using NPaperless.API.DTOs;
+using NPaperless.BL.Interfaces;
 
 namespace NPaperless.API.Controllers
 { 
@@ -28,6 +29,14 @@ namespace NPaperless.API.Controllers
     [ApiController]
     public class LoginApiController : ControllerBase
     { 
+
+		private readonly ILoginApiLogic _logic;
+
+		public LoginApiController(ILoginApiLogic logic)
+		{
+			_logic = logic;
+		}
+
         /// <summary>
         /// 
         /// </summary>

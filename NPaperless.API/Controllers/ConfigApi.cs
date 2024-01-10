@@ -19,6 +19,8 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using NPaperless.API.Attributes;
 using NPaperless.API.DTOs;
+using NPaperless.BL.Interfaces;
+using Microsoft.VisualBasic;
 
 namespace NPaperless.API.Controllers
 { 
@@ -28,6 +30,13 @@ namespace NPaperless.API.Controllers
     [ApiController]
     public class ConfigApiController : ControllerBase
     { 
+		private readonly IConfigApiLogic _logic;
+
+		public ConfigApiController(IConfigApiLogic logic)
+		{
+			_logic = logic;
+		}
+
         /// <summary>
         /// 
         /// </summary>
@@ -86,17 +95,11 @@ namespace NPaperless.API.Controllers
         [SwaggerResponse(statusCode: 200, type: typeof(CreateUISettings200Response), description: "Success")]
         public virtual IActionResult CreateUISettings([FromBody]CreateUISettingsRequest createUISettingsRequest)
         {
-
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(CreateUISettings200Response));
-            string exampleJson = null;
-            exampleJson = "{\n  \"success\" : true\n}";
+			string resultJson = _logic.CreateUiSettings();
             
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<CreateUISettings200Response>(exampleJson)
-            : default(CreateUISettings200Response);
-            //TODO: Change the data returned
-            return new ObjectResult(example);
+			var response = JsonConvert.DeserializeObject<CreateUISettings200Response>(resultJson);
+
+            return new ObjectResult(response);
         }
 
         /// <summary>
@@ -246,17 +249,12 @@ namespace NPaperless.API.Controllers
         [SwaggerResponse(statusCode: 200, type: typeof(GetUISettings200Response), description: "Success")]
         public virtual IActionResult GetUISettings()
         {
-
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(GetUISettings200Response));
-            string exampleJson = null;
-            exampleJson = "{\n  \"settings\" : {\n    \"update_checking\" : {\n      \"backend_setting\" : \"backend_setting\"\n    }\n  },\n  \"permissions\" : [ \"permissions\", \"permissions\" ],\n  \"display_name\" : \"display_name\",\n  \"user\" : {\n    \"is_superuser\" : true,\n    \"groups\" : [ \"\", \"\" ],\n    \"id\" : 0,\n    \"username\" : \"username\"\n  }\n}";
+            // exampleJson = "{\n  \"settings\" : {\n    \"update_checking\" : {\n      \"backend_setting\" : \"backend_setting\"\n    }\n  },\n  \"permissions\" : [ \"permissions\", \"permissions\" ],\n  \"display_name\" : \"display_name\",\n  \"user\" : {\n    \"is_superuser\" : true,\n    \"groups\" : [ \"\", \"\" ],\n    \"id\" : 0,\n    \"username\" : \"username\"\n  }\n}";
+            string resultJson = _logic.GetUiSettings();
             
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<GetUISettings200Response>(exampleJson)
-            : default(GetUISettings200Response);
-            //TODO: Change the data returned
-            return new ObjectResult(example);
+			var response = JsonConvert.DeserializeObject<CreateUISettings200Response>(resultJson);
+
+            return new ObjectResult(response);
         }
 
         /// <summary>

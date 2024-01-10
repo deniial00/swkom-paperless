@@ -36,7 +36,6 @@ namespace NPaperless.API.Controllers
 
 		private readonly IMapper _mapper;
 		private readonly IDocumentLogic _logic;
-
 		public DocumentsApiController(IMapper mapper, IDocumentLogic logic)
 		{
 			_mapper = mapper;
@@ -323,7 +322,7 @@ namespace NPaperless.API.Controllers
         [Consumes("multipart/form-data")]
         [ValidateModelState]
         [SwaggerOperation("UploadDocument")]
-		public virtual IActionResult UploadDocument([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime created, [FromForm (Name = "document_type")]int documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int correspondent, [FromForm (Name = "document")]IEnumerable<IFormFile> documentFile)
+		public virtual IActionResult UploadDocumentAsync([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime created, [FromForm (Name = "document_type")]int documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int correspondent, [FromForm (Name = "document")]IEnumerable<IFormFile> documentFile)
 		{
 			var newDocument = new NPaperless.BL.Entities.Document
 			{

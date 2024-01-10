@@ -38,6 +38,7 @@ using Minio;
 using Minio.Exceptions;
 using Minio.DataModel.Args;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace NPaperless.API
 {
@@ -112,6 +113,12 @@ namespace NPaperless.API
 					.WithSSL(false)
 					.Build()
 			);
+
+			services.AddControllers().AddNewtonsoftJson(options =>
+			{
+			options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+			options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+			});
 
             // Add framework services.
             services

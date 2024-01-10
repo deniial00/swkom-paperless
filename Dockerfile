@@ -1,7 +1,7 @@
 # Container we use for final publish
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 8081
+EXPOSE 8080
 
 # Build container
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
@@ -47,58 +47,3 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "NPaperless.API.dll"]
-
-
-
-
-
-
-
-# # Container we use for final publish
-# FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-# WORKDIR /app
-
-# COPY *.sln .
-# COPY NPaperless.API/*.csproj ./NPaperless.API/
-# COPY NPaperless.BL/*.csproj ./NPaperless.BL/
-# COPY NPaperless.BL.Entities/*.csproj ./NPaperless.BL.Entities/
-# COPY NPaperless.BL.Interfaces/*.csproj ./NPaperless.BL.Interfaces/
-
-# RUN dotnet restore
-
-# COPY NPaperless.API/. ./NPaperless.API/
-# COPY NPaperless.BL/. ./NPaperless.BL/
-# COPY NPaperless.BL.Entities/. ./NPaperless.BL.Entities/
-# COPY NPaperless.BL.Interfaces/. ./NPaperless.BL.Interfaces/
-
-# WORKDIR /app/NPaperless.API
-# RUN dotnet publish -c Release -o out
-
-# FROM mcr.microsoft.com/dotnet/aspnet:6.0 as runtime
-# WORKDIR /app
-
-# COPY --from=build /app/NPaperless.API/out ./
-#COPY entrypoint.sh .
-
-# ENTRYPOINT ["dotnet", "NPaperless.API.dll"]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ENTRYPOINT ["tail", "-f", "/dev/null"]
