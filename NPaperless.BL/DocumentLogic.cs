@@ -1,7 +1,7 @@
 using NPaperless.BL.Interfaces;
 using NPaperless.SA.Interfaces;
 using NPaperless.BL.Entities;
-
+using NPaperless.DA.Interfaces;
 
 using FluentValidation;
 ﻿using Microsoft.AspNetCore.Http;
@@ -9,6 +9,8 @@ using Minio;
 using Minio.DataModel.Args;
 using Minio.Exceptions;
 using Microsoft.Extensions.Logging;
+using Npgsql.TypeMapping;
+using AutoMapper;
 
 
 
@@ -18,12 +20,16 @@ namespace NPaperless.BL {
 		private readonly IMinioClient _minioClient;
 		private readonly ILogger<DocumentLogic> _logger;
 		private readonly IRabbitMQService _queueService;
+		private readonly IDocumentRepository _dataAccess;
+		private readonly IMapper _mapper;
 
-        public DocumentLogic(IValidator<Document> validator, IMinioClient minioClient, ILogger<DocumentLogic> logger, IRabbitMQService rabbitMQService) {
+        public DocumentLogic(IValidator<Document> validator, IMinioClient minioClient, ILogger<DocumentLogic> logger, IRabbitMQService rabbitMQService, IDocumentRepository dataAccess, IMapper mapper) {
             _validator = validator;
 			_minioClient = minioClient;
 			_logger = logger;
 			_queueService = rabbitMQService;
+			_dataAccess = dataAccess;
+			_mapper = mapper;
         }
 		public async Task<bool> CreateDocument(Document newDocument, IEnumerable<IFormFile> documentFiles){
 
@@ -74,15 +80,19 @@ namespace NPaperless.BL {
 					_logger.LogError("Error uploading file: ", e);
 					throw new BLException("Error uploading file: ", e);
 				}
+
+				var daDocument = _mapper.Map<NPaperless.DA.Entities.Document>(newDocument);
+				_dataAccess.Add(daDocument);
+
 				return true;
 			}
 
 			return false;
 		}
 
-		public string GetDocument(int id, int? page, bool? fullPerms){
-			_logger.LogError("GetDocument is not implemented");
-			throw new BLException("NotImplementedException");
+		public Document GetDocument(int id, int? page, bool? fullPerms){
+			var daDocument = _mapper.Map<NPaperless.BL.Entities.Document>(_dataAccess.GetById(id));
+			return daDocument;
 		}
 		public bool DeleteDocument(int id){
 			_logger.LogError("DeleteDocument is not implemented");

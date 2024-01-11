@@ -2,7 +2,9 @@ namespace NPaperless.DA.Entities
 {
     public class Document
     {
+
         public int Id { get; set; }
+		public string Guid { get; set; }
         public int Correspondent { get; set; }
         public int DocumentType { get; set; }
         public int StoragePath { get; set; }
