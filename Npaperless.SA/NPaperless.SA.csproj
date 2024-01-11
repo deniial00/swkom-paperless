@@ -1,18 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="minio" Version="6.0.1" />
-    <PackageReference Include="rabbitmq.client" Version="6.8.1" />
+    <PackageReference Include="minio" Version="6.0.1"/>
+    <PackageReference Include="rabbitmq.client" Version="6.8.1"/>
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="*"/>
+    <PackageReference Include="Tesseract" Version="5.2.0"/>
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\NPaperless.SA.Interfaces\NPaperless.SA.Interfaces.csproj" />
+    <ProjectReference Include="..\NPaperless.SA.Interfaces\NPaperless.SA.Interfaces.csproj"/>
   </ItemGroup>
-
 </Project>
