@@ -3,13 +3,9 @@ using System.Text;
 using Minio;
 using NPaperless.SA.Interfaces;
 
-using Minio.DataModel.Args;
 using RabbitMQ.Client;
 
-// using Newtonsoft.Json;
-using System.Text.Json.Serialization;
-
-namespace NPaperless.BL;
+namespace NPaperless.SA;
 public class RabbitMQService : IRabbitMQService
 {
 	private readonly ConnectionFactory _connectionFactory;
@@ -21,7 +17,8 @@ public class RabbitMQService : IRabbitMQService
 		_queueName = queueName;
 	}
 
-	public Guid RetrieveJobFromQueue()
+	//TODO: Umschreiben auf Event-based mit EventHandler
+	public Guid? RetrieveJobFromQueue() 
 	{
 		using (var connection = _connectionFactory.CreateConnection())
 		using (var channel = connection.CreateModel())
@@ -39,7 +36,8 @@ public class RabbitMQService : IRabbitMQService
 			}
 		}
 		
-		throw new Exception();
+		return null;
+		// throw new Exception(); // kann eigentlich nd passieren. außer es wird keine guid geschickt
 	}
 
 	public void SendJobToQueue(Guid guid)
