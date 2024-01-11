@@ -28,7 +28,7 @@ services:
     container_name: swkom-api
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile-API
       args:
         - configuration=Debug
     depends_on:
@@ -36,13 +36,14 @@ services:
       - rabbit-mq
     ports:
       - 8080:8080
-  # worker:
-  #   image: swkom-worker
-  #   container_name: swkom-worker
-  #   build:
-  #     context: ./NPaperless.SA/
-  #     args:
-  #       - configuration=Debug
+  worker:
+    image: swkom-worker
+    container_name: swkom-worker
+    build:
+      context: .
+      dockerfile: ./Dockerfile-WORKER
+      args:
+        - configuration=Debug
   rabbit-mq:
     container_name: swkom-mq
     image: rabbitmq:3-management
