@@ -1,7 +1,7 @@
 using NPaperless.BL.Interfaces;
 using NPaperless.SA.Interfaces;
 using NPaperless.BL.Entities;
-
+using NPaperless.DA.Interfaces;
 
 using FluentValidation;
 ﻿using Microsoft.AspNetCore.Http;
@@ -9,6 +9,8 @@ using Minio;
 using Minio.DataModel.Args;
 using Minio.Exceptions;
 using Microsoft.Extensions.Logging;
+using Npgsql.TypeMapping;
+using AutoMapper;
 using CommunityToolkit.HighPerformance;
 using Microsoft.AspNetCore.WebUtilities;
 
@@ -20,17 +22,23 @@ namespace NPaperless.BL {
 		private readonly IMinioService _minioService;
 		private readonly ILogger<DocumentLogic> _logger;
 		private readonly IRabbitMQService _queueService;
+		private readonly IDocumentRepository _dataAccess;
+		private readonly IMapper _mapper;
 
         public DocumentLogic(
 			IValidator<Document> validator,
 			// IMinioClient minioClient,
 			IMinioService minioService,
 			ILogger<DocumentLogic> logger,
-			IRabbitMQService rabbitMQService) {
+			IRabbitMQService rabbitMQService,
+			IDocumentRepository dataAccess,
+			IMapper mapper) {
             _validator = validator;
 			_minioService = minioService;
 			_logger = logger;
 			_queueService = rabbitMQService;
+			_dataAccess = dataAccess;
+			_mapper = mapper;
         }
 		public async Task<bool> CreateDocument(Document newDocument, IEnumerable<IFormFile> documentFiles){
 						
@@ -60,20 +68,22 @@ namespace NPaperless.BL {
 					_logger.LogError("Error uploading file: ", e);
 					throw new BLException("Error uploading file: ", e);
 				}
+
+				var daDocument = _mapper.Map<NPaperless.DA.Entities.Document>(newDocument);
+				_dataAccess.Add(daDocument);
+
 				return true;
 			}
 
 			return false;
 		}
 
-		public async Task<Stream> GetDocument(Guid guid){
-
-			var doc = await _minioService.GetDocument(guid.ToString());
-
-			return doc;
+		public Document GetDocument(int id, int? page, bool? fullPerms){
+			var daDocument = _mapper.Map<NPaperless.BL.Entities.Document>(_dataAccess.GetById(id));
+			return daDocument;
 		}
 
-		public bool DeleteDocument(Guid guid){
+		public bool DeleteDocument(int id){
 			_logger.LogError("DeleteDocument is not implemented");
 			throw new BLException("NotImplementedException");
 		}
