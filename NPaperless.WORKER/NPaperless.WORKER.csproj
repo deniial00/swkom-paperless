@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.13" /> -->
-    <!-- <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" /> -->
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
     <PackageReference Include="minio" Version="6.0.1" />
     <PackageReference Include="rabbitmq.client" Version="6.8.1" />

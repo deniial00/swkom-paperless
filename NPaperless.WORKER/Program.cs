@@ -1,10 +1,7 @@
 using NPaperless.SA;
 using NPaperless.SA.Interfaces;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
-using Minio;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,13 +21,20 @@ var host = Host.CreateDefaultBuilder(args)
 			)
 		);
 
-		services.AddSingleton<IMinioClient>(
-			new MinioClient()
-				.WithEndpoint("swkom-minio", 9000)
-				.WithCredentials("swkom-minio", "swkom-minio")
-				.WithSSL(false)
-				.Build()
-		);
+		services.AddSingleton<IMinioService>(
+			new MinioService(
+				"swkom-minio",
+				"swkom-minio",
+				"swkom-minio",
+				"swkom-minio",
+				9000
+		));
+
+		// services.AddSingleton<IOCRService>(
+		// 	new OCRService(
+		// 		"traineeData",
+		// 		"german"
+		// ));
 
 		services.AddHostedService<Worker>();
 	}).Build();

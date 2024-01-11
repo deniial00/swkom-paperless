@@ -11,48 +11,43 @@ using Minio.Exceptions;
 using Microsoft.Extensions.Logging;
 using Npgsql.TypeMapping;
 using AutoMapper;
+using CommunityToolkit.HighPerformance;
+using Microsoft.AspNetCore.WebUtilities;
 
 
 
 namespace NPaperless.BL {
 	public class DocumentLogic : IDocumentLogic {
 		private readonly IValidator<Document> _validator;
-		private readonly IMinioClient _minioClient;
+		private readonly IMinioService _minioService;
 		private readonly ILogger<DocumentLogic> _logger;
 		private readonly IRabbitMQService _queueService;
 		private readonly IDocumentRepository _dataAccess;
 		private readonly IMapper _mapper;
 
-        public DocumentLogic(IValidator<Document> validator, IMinioClient minioClient, ILogger<DocumentLogic> logger, IRabbitMQService rabbitMQService, IDocumentRepository dataAccess, IMapper mapper) {
+        public DocumentLogic(
+			IValidator<Document> validator,
+			// IMinioClient minioClient,
+			IMinioService minioService,
+			ILogger<DocumentLogic> logger,
+			IRabbitMQService rabbitMQService,
+			IDocumentRepository dataAccess,
+			IMapper mapper) {
             _validator = validator;
-			_minioClient = minioClient;
+			_minioService = minioService;
 			_logger = logger;
 			_queueService = rabbitMQService;
 			_dataAccess = dataAccess;
 			_mapper = mapper;
         }
 		public async Task<bool> CreateDocument(Document newDocument, IEnumerable<IFormFile> documentFiles){
-
-			
+						
 			var result = _validator.Validate(newDocument);
-			string bucketName = "swkom-minio";
 
             // if (true) {
             if (result.IsValid) {
 				try
-				{
-					// Make a bucket on the server, if not already present.
-					var beArgs = new BucketExistsArgs()
-						.WithBucket(bucketName);
-					bool found = await _minioClient.BucketExistsAsync(beArgs).ConfigureAwait(false);
-					if (!found)
-					{
-						var mbArgs = new MakeBucketArgs()
-							.WithBucket(bucketName);
-						await _minioClient.MakeBucketAsync(mbArgs).ConfigureAwait(false);
-						_logger.Log(LogLevel.Debug, "Created bucket because it did not exist yet");
-					}
-					
+				{	
 					// Upload a file to bucket.
 					foreach (var file in documentFiles)
 					{
@@ -60,15 +55,8 @@ namespace NPaperless.BL {
 						var objectName = guid.ToString(); // Generate a unique name for the file
 						using (var stream = file.OpenReadStream())
 						{
-							var putObjectArgs = new PutObjectArgs()
-								.WithBucket(bucketName)
-								.WithObject(objectName)
-								.WithStreamData(stream)
-								.WithObjectSize(stream.Length)
-								.WithContentType(file.ContentType);
-
-							await _minioClient.PutObjectAsync(putObjectArgs).ConfigureAwait(false);
-							_logger.Log(LogLevel.Debug, "Uploaded file with guid '" + objectName + "' to bucket '" + bucketName + "'");
+							await _minioService.UploadDocument(objectName, stream, file.ContentType);
+							_logger.Log(LogLevel.Debug, "Uploaded file with guid '" + objectName + "'");
 						}
 
 						// Send to queue for async processing of file
@@ -94,10 +82,12 @@ namespace NPaperless.BL {
 			var daDocument = _mapper.Map<NPaperless.BL.Entities.Document>(_dataAccess.GetById(id));
 			return daDocument;
 		}
+
 		public bool DeleteDocument(int id){
 			_logger.LogError("DeleteDocument is not implemented");
 			throw new BLException("NotImplementedException");
 		}
+		
 		public string UpdateDocument(){
 			_logger.LogError("UpdateDocument is not implemented");
 			throw new BLException("NotImplementedException");

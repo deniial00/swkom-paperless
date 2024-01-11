@@ -120,18 +120,28 @@ namespace NPaperless.API
                 )
             );
 
-			services.AddSingleton<IMinioClient>(
-                new MinioClient()
-					.WithEndpoint("swkom-minio", 9000)
-					.WithCredentials("swkom-minio", "swkom-minio")
-					.WithSSL(false)
-					.Build()
-			);
+			// services.AddSingleton<IMinioClient>(
+            //     new MinioClient()
+			// 		.WithEndpoint("swkom-minio", 9000)
+			// 		.WithCredentials("swkom-minio", "swkom-minio")
+			// 		.WithSSL(false)
+			// 		.Build()
+			// );
+
+            // lol - die Credentials
+            services.AddSingleton<IMinioService>(
+                new MinioService(
+                    "swkom-minio",
+                    "swkom-minio",
+                    "swkom-minio",
+                    "swkom-minio",
+                    9000
+            ));
 
 			services.AddControllers().AddNewtonsoftJson(options =>
 			{
-			options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-			options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 			});
 
             // Add framework services.
