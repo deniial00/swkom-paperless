@@ -24,6 +24,7 @@ using AutoMapper;
 using System.Threading.Tasks;
 using NPaperless.BL.Entities;
 using System.Security;
+using Microsoft.Extensions.Logging;
 
 namespace NPaperless.API.Controllers
 { 
@@ -36,10 +37,12 @@ namespace NPaperless.API.Controllers
 
 		private readonly IMapper _mapper;
 		private readonly IDocumentLogic _logic;
-		public DocumentsApiController(IMapper mapper, IDocumentLogic logic)
+		private readonly ILogger<DocumentsApiController> _logger;
+		public DocumentsApiController(IMapper mapper, IDocumentLogic logic, ILogger<DocumentsApiController> logger)
 		{
 			_mapper = mapper;
 			_logic = logic;
+			_logger = logger;
 		}
 
         /// <summary>
@@ -72,6 +75,7 @@ namespace NPaperless.API.Controllers
         [SwaggerOperation("DeleteDocument")]
         public virtual IActionResult DeleteDocument([FromRoute (Name = "id")][Required]int id)
         {
+			_logger.Log(LogLevel.Debug, "Called delete document route with document id '" + id + "'");
 			var result = _logic.DeleteDocument(id);
         	return result == null ? StatusCode(500) : Ok(result);
         }
@@ -115,6 +119,7 @@ namespace NPaperless.API.Controllers
         [SwaggerResponse(statusCode: 200, type: typeof(GetDocument200Response), description: "Success")]
         public virtual IActionResult GetDocument([FromRoute (Name = "id")][Required]int id, [FromQuery (Name = "page")]int? page, [FromQuery (Name = "full_perms")]bool? fullPerms)
         {
+			_logger.Log(LogLevel.Debug, "Called get document route with document id '" + id + "'");
             // result = "{\n  \"owner\" : 7,\n  \"archive_serial_number\" : 2,\n  \"notes\" : [ {\n    \"note\" : \"note\",\n    \"created\" : \"created\",\n    \"document\" : 1,\n    \"id\" : 7,\n    \"user\" : 1\n  }, {\n    \"note\" : \"note\",\n    \"created\" : \"created\",\n    \"document\" : 1,\n    \"id\" : 7,\n    \"user\" : 1\n  } ],\n  \"added\" : \"added\",\n  \"created\" : \"created\",\n  \"title\" : \"title\",\n  \"content\" : \"content\",\n  \"tags\" : [ 5, 5 ],\n  \"storage_path\" : 5,\n  \"permissions\" : {\n    \"view\" : {\n      \"groups\" : [ 3, 3 ],\n      \"users\" : [ 9, 9 ]\n    },\n    \"change\" : {\n      \"groups\" : [ 3, 3 ],\n      \"users\" : [ 9, 9 ]\n    }\n  },\n  \"archived_file_name\" : \"archived_file_name\",\n  \"modified\" : \"modified\",\n  \"correspondent\" : 6,\n  \"original_file_name\" : \"original_file_name\",\n  \"id\" : 0,\n  \"created_date\" : \"created_date\",\n  \"document_type\" : 1\n}";
 			var result = _logic.GetDocument(id, page, fullPerms);
         	return result == null ? StatusCode(500) : Ok(result);
@@ -303,6 +308,7 @@ namespace NPaperless.API.Controllers
             // return new ObjectResult(example);
 
 			// todo: richtige parameter übergeben und schauen, wie das überhaupt funktionieren soll
+			_logger.Log(LogLevel.Debug, "Called update document route with document id '" + id + "'");
 			var result = _logic.UpdateDocument();
 			return result == null ? StatusCode(500) : Ok(result);
         }
@@ -324,6 +330,7 @@ namespace NPaperless.API.Controllers
         [SwaggerOperation("UploadDocument")]
 		public virtual IActionResult UploadDocumentAsync([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime created, [FromForm (Name = "document_type")]int documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int correspondent, [FromForm (Name = "document")]IEnumerable<IFormFile> documentFile)
 		{
+			_logger.Log(LogLevel.Debug, "Called upload document route");
 			var newDocument = new NPaperless.BL.Entities.Document
 			{
 				Title = title,
