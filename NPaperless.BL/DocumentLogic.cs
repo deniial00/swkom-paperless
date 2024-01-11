@@ -26,7 +26,7 @@ namespace NPaperless.BL {
 			var result = _validator.Validate(newDocument);
 			string bucketName = "swkom-minio";
 
-            if (true) {
+            if (result.IsValid) {
 				try
 				{
 					// Make a bucket on the server, if not already present.
@@ -64,9 +64,10 @@ namespace NPaperless.BL {
 					_logger.LogError("Error uploading file: ", e);
 					throw new BLException("Error uploading file: ", e);
 				}
+				return true;
 			}
 
-			return true;
+			return false;
 		}
 
 		public string GetDocument(int id, int? page, bool? fullPerms){

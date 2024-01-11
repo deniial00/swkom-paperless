@@ -19,3 +19,6 @@
 
 # Ignore all .local.env files
 *.env.local
+
+minioData/
+dbData/

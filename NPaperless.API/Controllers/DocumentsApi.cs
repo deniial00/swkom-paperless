@@ -328,7 +328,7 @@ namespace NPaperless.API.Controllers
         [Consumes("multipart/form-data")]
         [ValidateModelState]
         [SwaggerOperation("UploadDocument")]
-		public virtual IActionResult UploadDocumentAsync([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime created, [FromForm (Name = "document_type")]int documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int correspondent, [FromForm (Name = "document")]IEnumerable<IFormFile> documentFile)
+		public virtual async Task<IActionResult> UploadDocumentAsync([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime created, [FromForm (Name = "document_type")]int documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int correspondent, [FromForm (Name = "document")]IEnumerable<IFormFile> documentFile)
 		{
 			_logger.Log(LogLevel.Debug, "Called upload document route");
 			var newDocument = new NPaperless.BL.Entities.Document
@@ -340,8 +340,8 @@ namespace NPaperless.API.Controllers
 				Correspondent = correspondent
 			};
 
-			var result = _logic.CreateDocument(newDocument, documentFile);
-			return result == null ? StatusCode(500) : Ok(result);
+			var result = await _logic.CreateDocument(newDocument, documentFile);
+			return !result ? StatusCode(500) : Ok(result);
 		}
     }
 }
