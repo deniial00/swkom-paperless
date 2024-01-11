@@ -13,6 +13,8 @@ COPY ["NPaperless.API/NPaperless.API.csproj", "NPaperless.API/"]
 COPY ["NPaperless.BL/NPaperless.BL.csproj", "NPaperless.BL/"]
 COPY ["NPaperless.BL.Entities/NPaperless.BL.Entities.csproj", "NPaperless.BL.Entities/"]
 COPY ["NPaperless.BL.Interfaces/NPaperless.BL.Interfaces.csproj", "NPaperless.BL.Interfaces/"]
+COPY ["NPaperless.SA/NPaperless.SA.csproj", "NPaperless.SA/"]
+COPY ["NPaperless.SA.Interfaces/NPaperless.SA.Interfaces.csproj", "NPaperless.SA.Interfaces/"]
 COPY ["NPaperless.DA.Entities/NPaperless.DA.Entities.csproj", "NPaperless.DA.Entities/"]
 COPY ["NPaperless.DA.Interfaces/NPaperless.DA.Interfaces.csproj", "NPaperless.DA.Interfaces/"]
 COPY ["NPaperless.DA.Sql/NPaperless.DA.Sql.csproj", "NPaperless.DA.Sql/"]
@@ -22,6 +24,10 @@ RUN dotnet restore "NPaperless.API/NPaperless.API.csproj"
 COPY ["NPaperless.API/", "NPaperless.API/"]
 RUN dotnet restore "NPaperless.BL/NPaperless.BL.csproj"
 COPY ["NPaperless.BL/", "NPaperless.BL/"]
+RUN dotnet restore "NPaperless.SA/NPaperless.SA.csproj"
+COPY ["NPaperless.SA/", "NPaperless.SA/"]
+RUN dotnet restore "NPaperless.SA.Interfaces/NPaperless.SA.Interfaces.csproj"
+COPY ["NPaperless.SA.Interfaces/", "NPaperless.SA.Interfaces/"]
 RUN dotnet restore "NPaperless.BL.Entities/NPaperless.BL.Entities.csproj"
 COPY ["NPaperless.BL.Entities/", "NPaperless.BL.Entities/"]
 RUN dotnet restore "NPaperless.BL.Interfaces/NPaperless.BL.Interfaces.csproj"

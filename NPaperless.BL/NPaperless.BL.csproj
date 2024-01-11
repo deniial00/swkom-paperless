@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NPaperless.BL.Entities\NPaperless.BL.Entities.csproj" />
 	<ProjectReference Include="..\NPaperless.BL.Interfaces\NPaperless.BL.Interfaces.csproj" />
+	<ProjectReference Include="..\NPaperless.SA.Interfaces\NPaperless.SA.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>

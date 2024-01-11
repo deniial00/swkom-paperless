@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="minio" Version="6.0.1" />
+    <PackageReference Include="rabbitmq.client" Version="6.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NPaperless.SA.Interfaces\NPaperless.SA.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,9 @@
 using NPaperless.BL.Interfaces;
-using FluentValidation;
+using NPaperless.SA.Interfaces;
 using NPaperless.BL.Entities;
+
+
+using FluentValidation;
 ﻿using Microsoft.AspNetCore.Http;
 using Minio;
 using Minio.DataModel.Args;
@@ -14,11 +17,13 @@ namespace NPaperless.BL {
 		private readonly IValidator<Document> _validator;
 		private readonly IMinioClient _minioClient;
 		private readonly ILogger<DocumentLogic> _logger;
+		private readonly IRabbitMQService _queueService;
 
-        public DocumentLogic(IValidator<Document> validator, IMinioClient minioClient, ILogger<DocumentLogic> logger) {
+        public DocumentLogic(IValidator<Document> validator, IMinioClient minioClient, ILogger<DocumentLogic> logger, IRabbitMQService rabbitMQService) {
             _validator = validator;
 			_minioClient = minioClient;
 			_logger = logger;
+			_queueService = rabbitMQService;
         }
 		public async Task<bool> CreateDocument(Document newDocument, IEnumerable<IFormFile> documentFiles){
 
@@ -26,6 +31,7 @@ namespace NPaperless.BL {
 			var result = _validator.Validate(newDocument);
 			string bucketName = "swkom-minio";
 
+            // if (true) {
             if (result.IsValid) {
 				try
 				{
@@ -44,7 +50,8 @@ namespace NPaperless.BL {
 					// Upload a file to bucket.
 					foreach (var file in documentFiles)
 					{
-						var objectName = Guid.NewGuid().ToString(); // Generate a unique name for the file
+						var guid = Guid.NewGuid();
+						var objectName = guid.ToString(); // Generate a unique name for the file
 						using (var stream = file.OpenReadStream())
 						{
 							var putObjectArgs = new PutObjectArgs()
@@ -57,6 +64,9 @@ namespace NPaperless.BL {
 							await _minioClient.PutObjectAsync(putObjectArgs).ConfigureAwait(false);
 							_logger.Log(LogLevel.Debug, "Uploaded file with guid '" + objectName + "' to bucket '" + bucketName + "'");
 						}
+
+						// Send to queue for async processing of file
+						_queueService.SendJobToQueue(guid);
 					}
 				}
 				catch (MinioException e)

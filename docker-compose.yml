@@ -33,8 +33,16 @@ services:
         - configuration=Debug
     depends_on:
       - proxy
+      - rabbit-mq
     ports:
       - 8080:8080
+  # worker:
+  #   image: swkom-worker
+  #   container_name: swkom-worker
+  #   build:
+  #     context: ./NPaperless.SA/
+  #     args:
+  #       - configuration=Debug
   rabbit-mq:
     container_name: swkom-mq
     image: rabbitmq:3-management

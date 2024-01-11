@@ -31,6 +31,8 @@
   <ItemGroup>
     <ProjectReference Include="..\NPaperless.BL\NPaperless.BL.csproj" />
     <ProjectReference Include="..\NPaperless.DA.Sql\NPaperless.DA.Sql.csproj" />
+    <ProjectReference Include="..\NPaperless.SA\NPaperless.SA.csproj" />
+    <ProjectReference Include="..\NPaperless.SA.Interfaces\NPaperless.SA.Interfaces.csproj" />
 	<!-- <ProjectReference Include="..\NPaperless.BL.Entities\NPaperless.BL.Entities.csproj" /> -->
   </ItemGroup>
 </Project>
