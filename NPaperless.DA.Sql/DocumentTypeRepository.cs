@@ -11,7 +11,7 @@ namespace NPaperless.DA.Sql
 
         public DocumentTypeRepository(NPaperlessDbContext dbContext)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContext = dbContext ?? throw new DAException(nameof(dbContext));
         }
 
         public DocumentType GetById(long id)
@@ -43,6 +43,9 @@ namespace NPaperless.DA.Sql
                 _dbContext.DocumentTypes.Remove(documentType);
                 _dbContext.SaveChanges();
             }
+			else{
+				throw new DAException("Error: No DocuemntType with the id " + id + " was found!");
+			}
         }
     }
 }

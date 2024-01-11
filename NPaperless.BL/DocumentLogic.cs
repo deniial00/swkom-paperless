@@ -5,23 +5,28 @@ using NPaperless.BL.Entities;
 using Minio;
 using Minio.DataModel.Args;
 using Minio.Exceptions;
+using Microsoft.Extensions.Logging;
+
 
 
 namespace NPaperless.BL {
 	public class DocumentLogic : IDocumentLogic {
 		private readonly IValidator<Document> _validator;
 		private readonly IMinioClient _minioClient;
-        public DocumentLogic(IValidator<Document> validator, IMinioClient minioClient) {
+		private readonly ILogger<DocumentLogic> _logger;
+
+        public DocumentLogic(IValidator<Document> validator, IMinioClient minioClient, ILogger<DocumentLogic> logger) {
             _validator = validator;
 			_minioClient = minioClient;
+			_logger = logger;
         }
-		public async Task<string> CreateDocument(Document newDocument, IEnumerable<IFormFile> documentFiles){
+		public async Task<bool> CreateDocument(Document newDocument, IEnumerable<IFormFile> documentFiles){
 
 			
 			var result = _validator.Validate(newDocument);
 			string bucketName = "swkom-minio";
 
-            if (true) {
+            if (result.IsValid) {
 				try
 				{
 					// Make a bucket on the server, if not already present.
@@ -33,6 +38,7 @@ namespace NPaperless.BL {
 						var mbArgs = new MakeBucketArgs()
 							.WithBucket(bucketName);
 						await _minioClient.MakeBucketAsync(mbArgs).ConfigureAwait(false);
+						_logger.Log(LogLevel.Debug, "Created bucket because it did not exist yet");
 					}
 					
 					// Upload a file to bucket.
@@ -49,26 +55,32 @@ namespace NPaperless.BL {
 								.WithContentType(file.ContentType);
 
 							await _minioClient.PutObjectAsync(putObjectArgs).ConfigureAwait(false);
+							_logger.Log(LogLevel.Debug, "Uploaded file with guid '" + objectName + "' to bucket '" + bucketName + "'");
 						}
 					}
 				}
 				catch (MinioException e)
 				{
-					Console.WriteLine("File Upload Error: {0}", e.Message);
+					_logger.LogError("Error uploading file: ", e);
+					throw new BLException("Error uploading file: ", e);
 				}
+				return true;
 			}
 
-			return null;
+			return false;
 		}
 
 		public string GetDocument(int id, int? page, bool? fullPerms){
-			throw new NotImplementedException();
+			_logger.LogError("GetDocument is not implemented");
+			throw new BLException("NotImplementedException");
 		}
 		public bool DeleteDocument(int id){
-			throw new NotImplementedException();
+			_logger.LogError("DeleteDocument is not implemented");
+			throw new BLException("NotImplementedException");
 		}
 		public string UpdateDocument(){
-			throw new NotImplementedException();
+			_logger.LogError("UpdateDocument is not implemented");
+			throw new BLException("NotImplementedException");
 		}
 	}
 }

@@ -11,7 +11,7 @@ namespace NPaperless.DA.Sql
 
         public DocTagRepository(NPaperlessDbContext dbContext)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContext = dbContext ?? throw new DAException(nameof(dbContext));
         }
 
         public DocTag GetById(long id)
@@ -42,7 +42,9 @@ namespace NPaperless.DA.Sql
             {
                 _dbContext.DocTags.Remove(docTag);
                 _dbContext.SaveChanges();
-            }
+            }else{
+				throw new DAException("Error: No docTag with the id " + id + " was found!");
+			}
         }
     }
 }

@@ -9,16 +9,16 @@ namespace NPaperless.BL {
             _validator = validator;
         }
 		public string CreateDocumentType(){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 		public string GetDocumentType(){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 		public bool DeleteDocumentType(int id){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 		public string UpdateDocumentType(){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 	}
 }

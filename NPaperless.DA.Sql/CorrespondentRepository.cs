@@ -11,7 +11,7 @@ namespace NPaperless.DA.Sql
 
         public CorrespondentRepository(NPaperlessDbContext dbContext)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContext = dbContext ?? throw new DAException(nameof(dbContext));
         }
 
         public Correspondent GetById(long id)
@@ -43,6 +43,9 @@ namespace NPaperless.DA.Sql
                 _dbContext.Correspondents.Remove(correspondent);
                 _dbContext.SaveChanges();
             }
+			else{
+				throw new DAException("Error: No correspondend with the id " + id + " was found!");
+			}
         }
     }
 }

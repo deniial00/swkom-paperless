@@ -9,16 +9,16 @@ namespace NPaperless.BL {
             _validator = validator;
         }
 		public string CreateDocTag(){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 		public string GetDocTag(){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 		public bool DeleteDocTag(int id){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 		public string UpdateDocTag(){
-			throw new NotImplementedException();
+			throw new BLException("NotImplementedException");
 		}
 	}
 }
