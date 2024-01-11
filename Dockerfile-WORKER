@@ -48,6 +48,8 @@ FROM build AS publish
 WORKDIR "/src/NPaperless.WORKER"
 RUN dotnet publish "NPaperless.WORKER.csproj" -c Release -o /app/publish
 
+RUN 
+
 # Make the final image for publishing
 FROM base AS final
 WORKDIR /app

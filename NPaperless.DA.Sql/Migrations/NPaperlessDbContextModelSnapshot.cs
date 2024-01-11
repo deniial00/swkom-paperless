@@ -103,9 +103,11 @@ namespace NPaperless.DA.Sql.Migrations
 
             modelBuilder.Entity("NPaperless.DA.Entities.Document", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Added")
                         .HasColumnType("timestamp with time zone");
@@ -133,6 +135,10 @@ namespace NPaperless.DA.Sql.Migrations
 
                     b.Property<int>("DocumentType")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Guid")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Modified")
                         .HasColumnType("timestamp with time zone");

@@ -21,6 +21,13 @@ var host = Host.CreateDefaultBuilder(args)
 			)
 		);
 
+		services.AddSingleton<IOCRService>(
+			new OCRService(
+				"ocr-trained-data/eng.traineddata",
+				"eng"
+			)
+		);
+		
 		services.AddSingleton<IMinioService>(
 			new MinioService(
 				"swkom-minio",
@@ -30,11 +37,6 @@ var host = Host.CreateDefaultBuilder(args)
 				9000
 		));
 
-		// services.AddSingleton<IOCRService>(
-		// 	new OCRService(
-		// 		"traineeData",
-		// 		"german"
-		// ));
 
 		services.AddHostedService<Worker>();
 	}).Build();

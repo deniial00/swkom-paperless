@@ -9,6 +9,9 @@
     <PackageReference Include="rabbitmq.client" Version="6.8.1"/>
     <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="*"/>
     <PackageReference Include="Tesseract" Version="5.2.0"/>
+    <PackageReference Include="Ghostscript" Version="9.2.0"/>
+    <PackageReference Include="Elasticsearch.Net" Version="7.17.5"/>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="*"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NPaperless.SA.Interfaces\NPaperless.SA.Interfaces.csproj"/>
