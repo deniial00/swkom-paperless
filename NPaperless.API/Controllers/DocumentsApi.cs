@@ -75,7 +75,7 @@ namespace NPaperless.API.Controllers
         [Route("/api/documents/{id}/")]
         [ValidateModelState]
         [SwaggerOperation("DeleteDocument")]
-        public virtual IActionResult DeleteDocument([FromRoute (Name = "id")][Required]Guid Guid)
+        public virtual IActionResult DeleteDocument([FromRoute (Name = "id")][Required]int Guid)
         {
 			_logger.Log(LogLevel.Debug, "Called delete document route with document id '" + Guid + "'");
 			var result = _logic.DeleteDocument(Guid);
@@ -99,16 +99,18 @@ namespace NPaperless.API.Controllers
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(System.IO.Stream));
             string exampleJson = null;
-            var stream = await _logic.GetDocument(new Guid("0f55b7a9-1642-4edf-a812-41378a8f2403"));
+            // var stream = await _logic.GetDocument(new Guid("0f55b7a9-1642-4edf-a812-41378a8f2403"));
+			var stream = _logic.GetDocument(id, 0, false);
 
             var example = exampleJson != null
             ? JsonConvert.DeserializeObject<System.IO.Stream>(exampleJson)
             : default(System.IO.Stream);
             //TODO: Change the data returned
-            return new FileStreamResult(stream, new MediaTypeHeaderValue("application/pdf"))
-            {
-                FileDownloadName = "test.pdf"
-            };
+            // return new FileStreamResult(stream, new MediaTypeHeaderValue("application/pdf"))
+            // {
+            //     FileDownloadName = "test.pdf"
+            // };
+			return Ok("test");
         }
 
         /// <summary>
@@ -127,7 +129,8 @@ namespace NPaperless.API.Controllers
         {
 			_logger.Log(LogLevel.Debug, "Called get document route with document id '" + id + "'");
             // result = "{\n  \"owner\" : 7,\n  \"archive_serial_number\" : 2,\n  \"notes\" : [ {\n    \"note\" : \"note\",\n    \"created\" : \"created\",\n    \"document\" : 1,\n    \"id\" : 7,\n    \"user\" : 1\n  }, {\n    \"note\" : \"note\",\n    \"created\" : \"created\",\n    \"document\" : 1,\n    \"id\" : 7,\n    \"user\" : 1\n  } ],\n  \"added\" : \"added\",\n  \"created\" : \"created\",\n  \"title\" : \"title\",\n  \"content\" : \"content\",\n  \"tags\" : [ 5, 5 ],\n  \"storage_path\" : 5,\n  \"permissions\" : {\n    \"view\" : {\n      \"groups\" : [ 3, 3 ],\n      \"users\" : [ 9, 9 ]\n    },\n    \"change\" : {\n      \"groups\" : [ 3, 3 ],\n      \"users\" : [ 9, 9 ]\n    }\n  },\n  \"archived_file_name\" : \"archived_file_name\",\n  \"modified\" : \"modified\",\n  \"correspondent\" : 6,\n  \"original_file_name\" : \"original_file_name\",\n  \"id\" : 0,\n  \"created_date\" : \"created_date\",\n  \"document_type\" : 1\n}";
-			var result = _logic.GetDocument(new Guid("0f55b7a9-1642-4edf-a812-41378a8f2403"));
+			//var result = _logic.GetDocument(new Guid("0f55b7a9-1642-4edf-a812-41378a8f2403"));
+			var result = _logic.GetDocument(id, 0, false);
         	return result == null ? StatusCode(500) : Ok(result);
         }
 
