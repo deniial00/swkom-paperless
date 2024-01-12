@@ -1,7 +1,8 @@
+using NPaperless.SA.Interfaces;
+
 using System;
 using System.Text;
 using Minio;
-using NPaperless.SA.Interfaces;
 
 using RabbitMQ.Client;
 

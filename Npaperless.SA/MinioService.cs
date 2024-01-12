@@ -1,7 +1,9 @@
+using NPaperless.SA.Interfaces;
+
 using Minio;
 using Minio.DataModel.Args;
 
-namespace NPaperless.SA.Interfaces;
+namespace NPaperless.SA;
 public class MinioService : IMinioService
 {
 	private readonly IMinioClient _minioClient;

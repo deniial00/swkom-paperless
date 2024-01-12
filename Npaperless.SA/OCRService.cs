@@ -1,8 +1,10 @@
+using NPaperless.SA.Interfaces;
+
 using System.Text;
 using ImageMagick;
 using Tesseract;
 
-namespace NPaperless.SA.Interfaces;
+namespace NPaperless.SA;
 public class OCRService : IOCRService
 {
     private readonly string _pathToTrainedData;
