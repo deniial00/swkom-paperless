@@ -22,7 +22,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - dbData:/var/lib/postgresql/data
+      - ./dbData:/var/lib/postgresql/data
   api:
     image: swkom-api
     container_name: swkom-api
