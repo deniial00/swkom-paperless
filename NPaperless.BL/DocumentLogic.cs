@@ -4,7 +4,7 @@ using NPaperless.BL.Entities;
 using NPaperless.DA.Interfaces;
 
 using FluentValidation;
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Minio;
 using Minio.DataModel.Args;
 using Minio.Exceptions;
@@ -61,6 +61,7 @@ namespace NPaperless.BL {
 
 						// Send to queue for async processing of file
 						_queueService.SendJobToQueue(guid);
+						newDocument.Guid = guid.ToString();
 					}
 				}
 				catch (MinioException e)
@@ -79,8 +80,7 @@ namespace NPaperless.BL {
 		}
 
 		public Document GetDocument(int id, int? page, bool? fullPerms){
-			var daDocument = _mapper.Map<NPaperless.BL.Entities.Document>(_dataAccess.GetById(id));
-			return daDocument;
+			return _mapper.Map<NPaperless.BL.Entities.Document>(_dataAccess.GetById(id));
 		}
 
 		public bool DeleteDocument(int id){

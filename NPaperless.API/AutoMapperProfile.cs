@@ -24,7 +24,10 @@ namespace NPaperless.API
             CreateMap<NPaperless.DA.Entities.Document, NPaperless.BL.Entities.Document>();
             CreateMap<NPaperless.DA.Entities.DocumentType, NPaperless.BL.Entities.DocumentType>();
             CreateMap<NPaperless.DA.Entities.UserInfo, NPaperless.BL.Entities.UserInfo>();
-            CreateMap<NPaperless.DA.Entities.DocTag, NPaperless.BL.Entities.DocTag>();   
+            CreateMap<NPaperless.DA.Entities.DocTag, NPaperless.BL.Entities.DocTag>();
+
+			CreateMap<NPaperless.BL.Entities.Document, NPaperless.DA.Entities.Document>();
+			CreateMap<NPaperless.DA.Entities.Document, NPaperless.BL.Entities.Document>();
         }
     }
 }

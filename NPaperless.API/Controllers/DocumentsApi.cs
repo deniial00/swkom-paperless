@@ -27,6 +27,7 @@ using System.Security;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using Microsoft.Net.Http.Headers;
+using NPaperless.SA.Interfaces;
 
 namespace NPaperless.API.Controllers
 { 
@@ -40,11 +41,13 @@ namespace NPaperless.API.Controllers
 		private readonly IMapper _mapper;
 		private readonly IDocumentLogic _logic;
 		private readonly ILogger<DocumentsApiController> _logger;
-		public DocumentsApiController(IMapper mapper, IDocumentLogic logic, ILogger<DocumentsApiController> logger)
+		private readonly IMinioService _minio;
+		public DocumentsApiController(IMapper mapper, IDocumentLogic logic, ILogger<DocumentsApiController> logger, IMinioService minio)
 		{
 			_mapper = mapper;
 			_logic = logic;
 			_logger = logger;
+			_minio = minio;
 		}
 
         /// <summary>
@@ -98,19 +101,20 @@ namespace NPaperless.API.Controllers
 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(System.IO.Stream));
-            string exampleJson = null;
+            // string exampleJson = null;
             // var stream = await _logic.GetDocument(new Guid("0f55b7a9-1642-4edf-a812-41378a8f2403"));
-			var stream = _logic.GetDocument(id, 0, false);
+			var daDocument = _logic.GetDocument(id, 0, false);
+			var stream = await _minio.GetDocument(daDocument.Guid);
 
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<System.IO.Stream>(exampleJson)
-            : default(System.IO.Stream);
+            // var example = exampleJson != null
+            // ? JsonConvert.DeserializeObject<System.IO.Stream>(exampleJson)
+            // : default(System.IO.Stream);
             //TODO: Change the data returned
-            // return new FileStreamResult(stream, new MediaTypeHeaderValue("application/pdf"))
-            // {
-            //     FileDownloadName = "test.pdf"
-            // };
-			return Ok("test");
+            return new FileStreamResult(stream, new MediaTypeHeaderValue("application/pdf"))
+            {
+                FileDownloadName = $"{daDocument.Guid}.pdf"
+            };
+			// return Ok("test");
         }
 
         /// <summary>
@@ -337,7 +341,7 @@ namespace NPaperless.API.Controllers
         [Consumes("multipart/form-data")]
         [ValidateModelState]
         [SwaggerOperation("UploadDocument")]
-		public virtual async Task<IActionResult> UploadDocumentAsync([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime created, [FromForm (Name = "document_type")]int documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int correspondent, [FromForm (Name = "document")]IEnumerable<IFormFile> documentFile)
+		public virtual async Task<IActionResult> UploadDocumentAsync([FromForm (Name = "title")]string title, [FromForm (Name = "created")]string created, [FromForm (Name = "document_type")]int documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int correspondent, [FromForm (Name = "document")]IEnumerable<IFormFile> documentFile)
 		{
 			_logger.Log(LogLevel.Debug, "Called upload document route");
 			var newDocument = new NPaperless.BL.Entities.Document

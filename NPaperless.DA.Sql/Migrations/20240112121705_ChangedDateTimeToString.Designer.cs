@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NPaperless.DA.Sql;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NPaperless.DA.Sql.Migrations
 {
     [DbContext(typeof(NPaperlessDbContext))]
-    partial class NPaperlessDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240112121705_ChangedDateTimeToString")]
+    partial class ChangedDateTimeToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,52 +106,60 @@ namespace NPaperless.DA.Sql.Migrations
 
             modelBuilder.Entity("NPaperless.DA.Entities.Document", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("Added")
+                    b.Property<DateTime>("Added")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ArchiveSerialNumber")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ArchivedFileName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("Correspondent")
+                    b.Property<int>("Correspondent")
                         .HasColumnType("integer");
 
                     b.Property<string>("Created")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("CreatedDate")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("DocumentType")
+                    b.Property<int>("DocumentType")
                         .HasColumnType("integer");
 
                     b.Property<string>("Guid")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime>("Modified")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("OriginalFileName")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("StoragePath")
+                    b.Property<int>("StoragePath")
                         .HasColumnType("integer");
 
                     b.Property<List<int>>("Tags")
+                        .IsRequired()
                         .HasColumnType("integer[]");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");

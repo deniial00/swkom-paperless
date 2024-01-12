@@ -5,6 +5,7 @@
 	<ProjectReference Include="..\NPaperless.BL.Interfaces\NPaperless.BL.Interfaces.csproj" />
 	<ProjectReference Include="..\NPaperless.SA.Interfaces\NPaperless.SA.Interfaces.csproj" />
 	<ProjectReference Include="..\NPaperless.DA.Sql\NPaperless.DA.Sql.csproj" />
+	<ProjectReference Include="..\NPaperless.DA.Interfaces\NPaperless.DA.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>

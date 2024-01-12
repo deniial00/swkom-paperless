@@ -17,7 +17,7 @@ namespace NPaperless.DA.Sql
 			_logger = logger;
         }
 
-        public Document GetById(long id)
+        public Document GetById(int id)
         {
             return _dbContext.Documents.Find(id);
         }
@@ -38,7 +38,7 @@ namespace NPaperless.DA.Sql
             _dbContext.SaveChanges();
         }
 
-        public void Delete(long id)
+        public void Delete(int id)
         {
             var document = _dbContext.Documents.Find(id);
             if (document != null)

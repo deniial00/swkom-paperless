@@ -6,7 +6,7 @@ namespace NPaperless.DA.Interfaces
 {
     public interface IDocumentRepository
     {
-        public Document GetById(long id);
+        public Document GetById(int id);
 
         public IQueryable<Document> GetAll();
 
@@ -14,6 +14,6 @@ namespace NPaperless.DA.Interfaces
 
         public void Update(Document document);
 
-        public void Delete(long id);
+        public void Delete(int id);
     }
 }
